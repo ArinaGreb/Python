@@ -122,3 +122,19 @@ print(string.rfind("AaA")) #Ищет подстроку в строке прав
 print(string.index("AaA")) #Ищет подстроку в строке слево на право
 print(string.rindex("AaA")) #Ищет подстроку в строке право на слево
 #Возвращает первое вхождение(индекс) подстроки, если элемента нет, будет ошибка
+#Классификация(определение) строк
+print(string.isalnum()) #Определяет состоит ли строка из букв и чисел
+print(string.isalpha()) #Состоит ли строка из букв
+print(string.isdigit()) #Состоит ли строка из чисел
+print(string.islower()) #
+print(string.isupper()) #
+print(string.istitle()) #
+print(string.isspace()) #Проверяет наличие в строке пробольных символов
+#Форматирование и выравнивание строк
+print("main".center(10,"*")) #выравнивание строки по центру
+print("main\t\t\tmain".expandtabs(tabsize=1)) #заменяет табуляцию на пробелы
+print("main main").ljust(widthL): 10,fillchar: "@")) #Выравниване по левому краю
+print("main main").rjust(widthL): 10,fillchar: "?")) #Выравнивание по правому краю
+print("main main".lstrip()) #Все пробельные символы слевого края будут удалены
+print("main main".rstrip()) #Все пробельные символы правого края будут удалены
+print("main main".replace()) #Заменяет подстроку\
