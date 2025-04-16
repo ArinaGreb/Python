@@ -68,4 +68,4 @@ if stringUser == stringUser[::-1]:
 # d = stringA[0:5:-1] #'olleH'
 #stringB = " ".join(reversed(stringA))
 #stringC = ",".join(reversed(stringA)) #'o,l,l,e,H'
-#stringB = " ".split(reversed(stringA)) 
+#stringB = " ".split(reversed(stringA))
