@@ -1,0 +1,44 @@
+****Directories********Files****
+ Analiz_paketov__prakticheskoe_ruko[Kris_Sanders]v.pdf
+
+ CSSNotesForProfessionals-.pdf
+
+ CSS_dlya_profi_-_Grant_Kit_2019.pdf
+
+ fuler refactoring koda JavaScript.pdf
+
+ Git_dlya_professional_nogo_programmista.pdf
+
+ GraphQL_Yazyk_zaprosov_dlya_sovremennykh_veb-prilozheniy_-_Alex_Benx_2019.pdf
+
+ html-cheat-sheet-v1.pdf
+
+ Kak_ustroen_JavaScript_-_Krokford_D__2019.pdf
+
+ Linux_osnovnie-komandy.pdf
+
+ Node_js_v_deystvii_2-e_iz_-_M_Kantelon_2018.pdf
+
+ PHP 7. Котеров, Симдянов.pdf
+
+ Priemioop.pdf
+
+ QuaSy-онтология-Книга-01.pdf
+
+ Rasskazy_o_mnozhestvakh_-_N_Vilenkin_2005.pdf
+
+ [Bek_Kent]_YEkstremalnoe_programmirovanie._Razrabo.pdf
+
+ [Savchuk_I.]_Otyavlennuei_programmist._Laifhaking.pdf
+
+ Дэвид Гриффитс, Дон Гриффитс - Изучаем программирование на C (Мировой компьютерный бестселлер) - 2013.djvu
+
+ Кормен - Алгоритмы и анализ.djvu
+
+ Приемы объектно-ориентированного проектирования. Паттерны проектирования ( PDFDrive.com ).pdf
+
+ Стратегии_решения_математических.pdf
+
+ Элементарные шаблоны проектирования,Dzheyson Mak-Kolm Smit.pdf
+
+ Эффективная работа с унаследованным кодом, Maikl Fizers 2009.pdf
