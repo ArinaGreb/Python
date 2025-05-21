@@ -1,4 +1,3 @@
-#Модуль 5 файлы Часть 1
 #zadanie 1
 with open('test.txt','w') as f:
     f.write("banana mango me the math mango-banana")
