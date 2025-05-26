@@ -1,0 +1,42 @@
+#Задание 1
+import random
+
+numbers = [random.randint(1, 100) for _ in range(10)]
+print("Сгенерированный список:", numbers)
+
+search_num = int(input("Введите число для поиска: "))
+
+found = False
+for i in range(len(numbers)):
+    if numbers[i] == search_num:
+        print(f"Число {search_num} найдено на позиции {i}")
+        found = True
+        break
+
+if not found:
+    print(f"Число {search_num} не найдено в списке")
+#Задание 2
+import random
+
+numbers = sorted([random.randint(1, 100) for _ in range(10)])
+print("Отсортированный список:", numbers)
+
+search_num = int(input("Введите число для поиска: "))
+
+left = 0
+right = len(numbers) - 1
+found = False
+
+while left <= right:
+    middle = (left + right) // 2
+    if numbers[middle] == search_num:
+        print(f"Число {search_num} найдено на позиции {middle}")
+        found = True
+        break
+    elif numbers[middle] < search_num:
+        left = middle + 1
+    else:
+        right = middle - 1
+
+if not found:
+    print(f"Число {search_num} не найдено в списке")
