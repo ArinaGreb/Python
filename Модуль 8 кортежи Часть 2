@@ -1,0 +1,35 @@
+#Задание 1
+fruits = ('apple', 'banana', 'orange', 'apple', 'kiwi', 'banana')
+
+user_fruit = input("Введите название фрукта: ").lower()
+count = fruits.count(user_fruit)
+
+print(f"Фрукт '{user_fruit}' встречается {count} раз(а).")
+#Задание 2 
+fruits = ('banana', 'apple', 'bananamango', 'mango', 'strawberry-banana')
+
+user_fruit = input("Введите название фрукта: ").lower()
+count = sum(user_fruit in fruit for fruit in fruits)
+
+print(f"Слово '{user_fruit}' встречается {count} раз(а) (включая частичные совпадения).")
+#Задание 3 
+car_brands = ('Toyota', 'BMW', 'Mercedes', 'Toyota', 'Audi')
+
+old_brand = input("Введите производителя для замены: ")
+new_brand = input("Введите новое название: ")
+
+new_car_brands = tuple(new_brand if brand == old_brand else brand for brand in car_brands)
+
+print("Новый кортеж:", new_car_brands)
+#Задание 4 
+numbers = (5, 12, 333, 7, 91, 1000, 42)
+
+digit_stats = {}
+for num in numbers:
+    num_length = len(str(num))
+    if num_length not in digit_stats:
+        digit_stats[num_length] = 0
+    digit_stats[num_length] += 1
+
+for length, count in sorted(digit_stats.items()):
+    print(f"{length} цифр(ы) — {count} элемент(а/ов)")
