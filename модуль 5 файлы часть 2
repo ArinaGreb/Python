@@ -1,0 +1,221 @@
+import json
+import os
+
+def load_employees(filename):
+    # Загрузка списка сотрудников из файла
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            return json.load(file)
+    else:
+        return []
+
+def save_employees(employees, filename):
+    # Сохранение списка сотрудников в файл
+    with open(filename, 'w') as file:
+        json.dump(employees, file, indent=4)
+
+def input_employee():
+    # Ввод данных нового сотрудника
+    print("\nВведите данные сотрудника:")
+    last_name = input("Фамилия: ")
+    first_name = input("Имя: ")
+    age = int(input("Возраст: "))
+    position = input("Должность: ")
+    
+    return {
+        'last_name': last_name,
+        'first_name': first_name,
+        'age': age,
+        'position': position
+    }
+
+def print_employee(employee):
+    # Вывод информации о сотруднике
+    print(f"{employee['last_name']} {employee['first_name']}, {employee['age']} лет, {employee['position']}")
+
+def find_by_last_name(employees, last_name):
+    # Поиск сотрудников по фамилии
+    return [emp for emp in employees if emp['last_name'].lower() == last_name.lower()]
+
+def find_by_age(employees, age):
+    # Поиск сотрудников по возрасту
+    return [emp for emp in employees if emp['age'] == age]
+
+def find_by_first_letter(employees, letter):
+    # Поиск сотрудников по первой букве фамилии
+    return [emp for emp in employees if emp['last_name'].lower().startswith(letter.lower())]
+
+def save_to_file(employees, filename):
+    # Сохранение списка сотрудников в файл
+    with open(filename, 'w') as file:
+        for emp in employees:
+            file.write(f"{emp['last_name']}, {emp['first_name']}, {emp['age']}, {emp['position']}\n")
+    print(f"Данные сохранены в файл {filename}")
+
+def main():
+    print("Информационная система 'Сотрудники'")
+    
+    # Загрузка данных
+    filename = input("Введите имя файла для загрузки данных: ")
+    employees = load_employees(filename)
+    
+    while True:
+        print("\nМеню:")
+        print("1. Добавить сотрудника")
+        print("2. Редактировать сотрудника")
+        print("3. Удалить сотрудника")
+        print("4. Поиск по фамилии")
+        print("5. Вывод всех сотрудников")
+        print("6. Вывод сотрудников по возрасту")
+        print("7. Вывод сотрудников по первой букве фамилии")
+        print("8. Сохранить данные в файл")
+        print("9. Выход")
+        
+        choice = input("Выберите действие: ")
+        
+        if choice == '1':
+            # Добавление сотрудника
+            employee = input_employee()
+            employees.append(employee)
+            print("Сотрудник добавлен!")
+        
+        elif choice == '2':
+            # Редактирование сотрудника
+            last_name = input("Введите фамилию сотрудника для редактирования: ")
+            found = find_by_last_name(employees, last_name)
+            
+            if not found:
+                print("Сотрудник не найден!")
+            else:
+                for i, emp in enumerate(found, 1):
+                    print(f"{i}. ", end="")
+                    print_employee(emp)
+                
+                if len(found) > 1:
+                    num = int(input("Введите номер сотрудника для редактирования: ")) - 1
+                    employee = found[num]
+                else:
+                    employee = found[0]
+                
+                print("\nТекущие данные:")
+                print_employee(employee)
+                
+                print("\nВведите новые данные (оставьте пустым, чтобы не изменять):")
+                new_last_name = input(f"Фамилия [{employee['last_name']}]: ") or employee['last_name']
+                new_first_name = input(f"Имя [{employee['first_name']}]: ") or employee['first_name']
+                new_age = input(f"Возраст [{employee['age']}]: ")
+                new_age = int(new_age) if new_age else employee['age']
+                new_position = input(f"Должность [{employee['position']}]: ") or employee['position']
+                
+                # Обновляем данные
+                employee.update({
+                    'last_name': new_last_name,
+                    'first_name': new_first_name,
+                    'age': new_age,
+                    'position': new_position
+                })
+                print("Данные обновлены!")
+        
+        elif choice == '3':
+            # Удаление сотрудника
+            last_name = input("Введите фамилию сотрудника для удаления: ")
+            found = find_by_last_name(employees, last_name)
+            
+            if not found:
+                print("Сотрудник не найден!")
+            else:
+                for i, emp in enumerate(found, 1):
+                    print(f"{i}. ", end="")
+                    print_employee(emp)
+                
+                if len(found) > 1:
+                    num = int(input("Введите номер сотрудника для удаления: ")) - 1
+                    employee = found[num]
+                else:
+                    employee = found[0]
+                
+                employees.remove(employee)
+                print("Сотрудник удален!")
+        
+        elif choice == '4':
+            # Поиск по фамилии
+            last_name = input("Введите фамилию для поиска: ")
+            found = find_by_last_name(employees, last_name)
+            
+            if not found:
+                print("Сотрудники не найдены!")
+            else:
+                print("\nНайденные сотрудники:")
+                for emp in found:
+                    print_employee(emp)
+                
+                save = input("Сохранить результаты в файл? (y/n): ")
+                if save.lower() == 'y':
+                    save_filename = input("Введите имя файла для сохранения: ")
+                    save_to_file(found, save_filename)
+        
+        elif choice == '5':
+            # Вывод всех сотрудников
+            if not employees:
+                print("Список сотрудников пуст!")
+            else:
+                print("\nСписок всех сотрудников:")
+                for emp in employees:
+                    print_employee(emp)
+        
+        elif choice == '6':
+            # Вывод по возрасту
+            try:
+                age = int(input("Введите возраст для поиска: "))
+                found = find_by_age(employees, age)
+                
+                if not found:
+                    print(f"Сотрудники возраста {age} не найдены!")
+                else:
+                    print("\nНайденные сотрудники:")
+                    for emp in found:
+                        print_employee(emp)
+                    
+                    save = input("Сохранить результаты в файл? (y/n): ")
+                    if save.lower() == 'y':
+                        save_filename = input("Введите имя файла для сохранения: ")
+                        save_to_file(found, save_filename)
+            except ValueError:
+                print("Ошибка: введите число для возраста!")
+        
+        elif choice == '7':
+            # Вывод по первой букве фамилии
+            letter = input("Введите первую букву фамилии: ").strip()
+            if not letter:
+                print("Ошибка: введите букву!")
+            else:
+                found = find_by_first_letter(employees, letter[0])
+                
+                if not found:
+                    print(f"Сотрудники с фамилией на '{letter[0]}' не найдены!")
+                else:
+                    print("\nНайденные сотрудники:")
+                    for emp in found:
+                        print_employee(emp)
+                    
+                    save = input("Сохранить результаты в файл? (y/n): ")
+                    if save.lower() == 'y':
+                        save_filename = input("Введите имя файла для сохранения: ")
+                        save_to_file(found, save_filename)
+        
+        elif choice == '8':
+            # Сохранение данных
+            save_employees(employees, filename)
+            print("Данные сохранены!")
+        
+        elif choice == '9':
+            # Выход с сохранением
+            save_employees(employees, filename)
+            print("Данные сохранены. Выход из программы.")
+            break
+        
+        else:
+            print("Неверный ввод! Попробуйте еще раз.")
+
+if __name__ == "__main__":
+    main()
