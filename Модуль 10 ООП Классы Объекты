@@ -1,0 +1,409 @@
+#задание 1
+class Person:
+    def __init__(self):
+        self.name = ""
+        self.date = ""
+        self.phone = ""
+        self.city = ""
+        self.country = ""
+        self.address = ""
+    
+    def input_data(self):
+        self.name = input("Введите ФИО: ")
+        self.date = input("Введите дату рождения: ")
+        self.phone = input("Введите контактный телефон: ")
+        self.city = input("Введите город: ")
+        self.country = input("Введите страну: ")
+        self.address = input("Введите домашний адрес: ")
+    
+    def display_data(self):
+        print(f"ФИО: {self.name}")
+        print(f"Дата рождения: {self.date}")
+        print(f"Телефон: {self.phone}")
+        print(f"Город: {self.city}")
+        print(f"Страна: {self.country}")
+        print(f"Адрес: {self.address}")
+    
+    # Методы для доступа к полям
+    def get_name(self):
+        return self.name
+    
+    def set_name(self, value):
+        self.name = value
+    
+    def get_date(self):
+        return self.date
+    
+    def set_date(self, value):
+        self.date = value
+    
+    def get_phone(self):
+        return self.phone
+    
+    def set_phone(self, value):
+        self.phone = value
+    
+    def get_city(self):
+        return self.city
+    
+    def set_city(self, value):
+        self.city = value
+        
+    def get_country(self):
+        return self.country
+    
+    def set_country(self, value):
+        self.country = value
+        
+    def get_address(self):
+        return self.address
+    
+    def set_address(self, value):
+        self.address = value  
+
+
+# MAIN
+if __name__ == "__main__":
+    person = Person()
+    person.input_data()
+    person.display_data()
+
+#задание 2
+
+class City:
+    def __init__(self):
+        self.name = ""
+        self.region = ""
+        self.country = ""
+        self.population = 0
+        self.postal_code = ""
+        self.phone_code = ""
+    
+    def input_data(self):
+        """Метод для ввода данных о городе"""
+        self.name = input("Введите название города: ")
+        self.region = input("Введите название региона: ")
+        self.country = input("Введите название страны: ")
+        self.population = int(input("Введите количество жителей: "))
+        self.postal_code = input("Введите почтовый индекс: ")
+        self.phone_code = input("Введите телефонный код: ")
+    
+    def display_data(self):
+        """Метод для вывода данных о городе"""
+        print("\nИнформация о городе:")
+        print(f"Город: {self.name}")
+        print(f"Регион: {self.region}")
+        print(f"Страна: {self.country}")
+        print(f"Население: {self.population}")
+        print(f"Почтовый индекс: {self.postal_code}")
+        print(f"Телефонный код: {self.phone_code}")
+    
+    # Методы доступа к полям
+    def get_name(self):
+        return self.name
+    
+    def set_name(self, value):
+        self.name = value
+    
+    def get_region(self):
+        return self.region
+    
+    def set_region(self, value):
+        self.region = value
+    
+    def get_country(self):
+        return self.country
+    
+    def set_country(self, value):
+        self.country = value
+    
+    def get_population(self):
+        return self.population
+    
+    def set_population(self, value):
+        if value >= 0:
+            self.population = value
+        else:
+            raise ValueError("Население не может быть отрицательным")
+    
+    def get_postal_code(self):
+        return self.postal_code
+    
+    def set_postal_code(self, value):
+        self.postal_code = value
+    
+    def get_phone_code(self):
+        return self.phone_code
+    
+    def set_phone_code(self, value):
+        self.phone_code = value
+
+
+#MAIN
+if __name__ == "__main__":
+    my_city = City()
+    
+    # Вводим данные
+    print("Введите данные о городе:")
+    my_city.input_data()
+    
+    # Выводим данные
+    my_city.display_data()
+    
+    my_city.set_population(1000000)
+    my_city.set_postal_code("123456")
+    
+    print("\nОтдельные данные о городе:")
+    print(f"Название: {my_city.get_name()}")
+    print(f"Население: {my_city.get_population()}")
+    print(f"Почтовый индекс: {my_city.get_postal_code()}")
+    
+#задание 3
+class Country:
+    def __init__(self):
+        self.name = ""
+        self.continent = ""
+        self.population = 0
+        self.phone_code = ""
+        self.capital = ""
+        self.cities = []
+    
+    def input_data(self):
+        """Метод для ввода данных о стране"""
+        self.name = input("Введите название страны: ")
+        self.continent = input("Введите название континента: ")
+        self.population = int(input("Введите количество жителей: "))
+        self.phone_code = input("Введите телефонный код страны: ")
+        self.capital = input("Введите название столицы: ")
+        cities_input = input("Введите названия городов через запятую: ")
+        self.cities = [city.strip() for city in cities_input.split(',')]
+    
+    def display_data(self):
+        """Метод для вывода данных о стране"""
+        print("\nИнформация о стране:")
+        print(f"Страна: {self.name}")
+        print(f"Континент: {self.continent}")
+        print(f"Население: {self.population}")
+        print(f"Телефонный код: {self.phone_code}")
+        print(f"Столица: {self.capital}")
+        print(f"Города: {', '.join(self.cities)}")
+    
+    # Методы доступа к полям
+    def get_name(self):
+        return self.name
+    
+    def set_name(self, value):
+        self.name = value
+    
+    def get_continent(self):
+        return self.continent
+    
+    def set_continent(self, value):
+        self.continent = value
+    
+    def get_population(self):
+        return self.population
+    
+    def set_population(self, value):
+        if value >= 0:
+            self.population = value
+        else:
+            raise ValueError("Население не может быть отрицательным")
+    
+    def get_phone_code(self):
+        return self.phone_code
+    
+    def set_phone_code(self, value):
+        self.phone_code = value
+    
+    def get_capital(self):
+        return self.capital
+    
+    def set_capital(self, value):
+        self.capital = value
+    
+    def get_cities(self):
+        return self.cities
+    
+    def set_cities(self, value):
+        if isinstance(value, list):
+            self.cities = value
+        else:
+            raise ValueError("Города должны быть переданы в виде списка")
+    
+    def add_city(self, city_name):
+        """Метод для добавления одного города"""
+        self.cities.append(city_name)
+    
+    def remove_city(self, city_name):
+        """Метод для удаления города"""
+        if city_name in self.cities:
+            self.cities.remove(city_name)
+        else:
+            raise ValueError(f"Город {city_name} не найден в списке")
+
+
+# Демонстрация работы класса
+if __name__ == "__main__":
+    my_country = Country()
+    
+    # Вводим данные
+    print("Введите данные о стране:")
+    my_country.input_data()
+    
+    # Выводим данные
+    my_country.display_data()
+    
+    my_country.set_population(146000000)
+    my_country.add_city("Екатеринбург")
+    
+    print("\nОтдельные данные о стране:")
+    print(f"Название: {my_country.get_name()}")
+    print(f"Население: {my_country.get_population()}")
+    print(f"Столица: {my_country.get_capital()}")
+    print(f"Города: {', '.join(my_country.get_cities())}")
+    
+
+#задание 4
+class Fraction:
+    def __init__(self, numerator=0, denominator=1):
+        if denominator == 0:
+            raise ValueError("Знаменатель не может быть нулём")
+        self.numerator = numerator
+        self.denominator = denominator
+        self.simplify()
+    
+    def input_data(self):
+        """Метод для ввода дроби с клавиатуры"""
+        self.numerator = int(input("Введите числитель: "))
+        denominator = int(input("Введите знаменатель: "))
+        if denominator == 0:
+            raise ValueError("Знаменатель не может быть нулём")
+        self.denominator = denominator
+        self.simplify()
+    
+    def display_data(self):
+        """Метод для вывода дроби на экран"""
+        if self.denominator == 1:
+            print(f"Дробь: {self.numerator}")
+        else:
+            print(f"Дробь: {self.numerator}/{self.denominator}")
+    
+    # Методы доступа к полям
+    def get_numerator(self):
+        return self.numerator
+    
+    def set_numerator(self, value):
+        self.numerator = value
+        self.simplify()
+    
+    def get_denominator(self):
+        return self.denominator
+    
+    def set_denominator(self, value):
+        if value == 0:
+            raise ValueError("Знаменатель не может быть нулём")
+        self.denominator = value
+        self.simplify()
+    
+    def add(self, other):
+        """Сложение дробей"""
+        new_numerator = self.numerator * other.denominator + other.numerator * self.denominator
+        new_denominator = self.denominator * other.denominator
+        return Fraction(new_numerator, new_denominator)
+    
+    def subtract(self, other):
+        """Вычитание дробей"""
+        new_numerator = self.numerator * other.denominator - other.numerator * self.denominator
+        new_denominator = self.denominator * other.denominator
+        return Fraction(new_numerator, new_denominator)
+    
+    def multiply(self, other):
+        """Умножение дробей"""
+        new_numerator = self.numerator * other.numerator
+        new_denominator = self.denominator * other.denominator
+        return Fraction(new_numerator, new_denominator)
+    
+    def divide(self, other):
+        """Деление дробей"""
+        if other.numerator == 0:
+            raise ValueError("Нельзя делить на ноль")
+        new_numerator = self.numerator * other.denominator
+        new_denominator = self.denominator * other.numerator
+        return Fraction(new_numerator, new_denominator)
+    
+    def simplify(self):
+        """Упрощение дроби"""
+        def gcd(a, b):
+            """Нахождение наибольшего общего делителя"""
+            a, b = abs(a), abs(b)
+            while b:
+                a, b = b, a % b
+            return a
+        
+        common_divisor = gcd(self.numerator, self.denominator)
+        self.numerator = self.numerator // common_divisor
+        self.denominator = self.denominator // common_divisor
+        
+        if self.denominator < 0:
+            self.numerator *= -1
+            self.denominator *= -1
+    
+    def to_float(self):
+        """Преобразование дроби в десятичное число"""
+        return self.numerator / self.denominator
+    
+    def to_mixed_number(self):
+        """Преобразование в смешанное число"""
+        whole_part = self.numerator // self.denominator
+        remainder = self.numerator % self.denominator
+        if whole_part == 0:
+            return self
+        elif remainder == 0:
+            return f"{whole_part}"
+        else:
+            return f"{whole_part} {abs(remainder)}/{self.denominator}"
+
+
+# Демонстрация работы класса
+if __name__ == "__main__":
+    print("Демонстрация работы класса Fraction:")
+    
+    # Вывод дробей
+    frac1 = Fraction(3, 4)
+    frac2 = Fraction(1, 2)
+    print("\nДроби:")
+    frac1.display_data()
+    frac2.display_data()
+
+    print("\nРезультаты операций:")
+    sum_frac = frac1.add(frac2)
+    print("Сложение: ", end="")
+    sum_frac.display_data()
+    
+    sub_frac = frac1.subtract(frac2)
+    print("Вычитание: ", end="")
+    sub_frac.display_data()
+    
+    mul_frac = frac1.multiply(frac2)
+    print("Умножение: ", end="")
+    mul_frac.display_data()
+    
+    div_frac = frac1.divide(frac2)
+    print("Деление: ", end="")
+    div_frac.display_data()
+    
+    print("\nПреобразования:")
+    print(f"Десятичное представление дроби 3/4: {frac1.to_float()}")
+    mixed = Fraction(7, 4)
+    print(f"Смешанное число для 7/4: {mixed.to_mixed_number()}")
+    
+    # Ввод
+    print("\nРабота с пользовательским вводом:")
+    user_frac = Fraction()
+    try:
+        user_frac.input_data()
+        print("Введенная дробь: ", end="")
+        user_frac.display_data()
+    except ValueError as e:
+        print(f"Ошибка: {e}")
