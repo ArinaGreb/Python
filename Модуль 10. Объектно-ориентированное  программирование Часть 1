@@ -1,0 +1,228 @@
+#задание 1
+class Avto:
+    def __init__(self, model="", year=0, manufacturer="", volume=0.0, color="", price=0.0):
+        self.model = model
+        self.year = year
+        self.manufacturer = manufacturer
+        self.volume = volume
+        self.color = color
+        self.price = price
+
+    def input_data(self):
+        self.model = input("Введите название модели: ")
+        self.year = int(input("Введите год выпуска: "))
+        self.manufacturer = input("Введите производителя: ")
+        self.volume = float(input("Введите объем двигателя: "))
+        self.color = input("Введите цвет машины: ")
+        self.price = float(input("Введите цену: "))
+
+    def display_data(self):
+        print(f"Название модели: {self.model}")
+        print(f"Год выпуска: {self.year}")
+        print(f"Производитель: {self.manufacturer}")
+        print(f"Объем двигателя: {self.volume}")
+        print(f"Цвет машины: {self.color}")
+        print(f"Цена: {self.price}")
+
+# Методы для доступа к полям
+    def get_model(self):
+        return self.model
+
+    def get_year(self):
+        return self.year
+
+    def get_manufacturer(self):
+        return self.manufacturer
+
+    def get_volume(self):
+        return self.volume
+
+    def get_color(self):
+        return self.color
+
+    def get_price(self):
+        return self.price
+
+# Методы для изменения полей
+    def set_model(self, model):
+        self.model = model
+
+    def set_year(self, year):
+        self.year = year
+
+    def set_manufacturer(self, manufacturer):
+        self.manufacturer = manufacturer
+
+    def set_volume(self, volume):
+        self.volume = volume
+
+    def set_color(self, color):
+        self.color = color
+
+    def set_price(self, price):
+        self.price = price
+
+
+#main
+car = Avto()
+car.input_data()
+print("\nИнформация об автомобиле:")
+car.display_data()
+
+#NEW
+car.set_price(15000)
+car.set_color("Красный")
+
+print("\nОбновленная информация об автомобиле:")
+print(f"Новая цена: {car.get_price()}")
+print(f"Новый цвет: {car.get_color()}")
+
+#задание 2
+class Book:
+    def __init__(self, name="", year=0, publisher="", genre="", author="", price=0.0):
+        self.name = name
+        self.year = year
+        self.publisher = publisher
+        self.genre = genre
+        self.author = author
+        self.price = price
+    
+    def input_data(self):
+        self.name = input("Введите название книги: ")
+        self.year = int(input("Введите год выпуска: "))
+        self.publisher = input("Введите издателя: ")
+        self.genre = input("Введите жанр: ")  
+        self.author = input("Введите автора: ")
+        self.price = float(input("Введите цену: "))  
+
+    def display_data(self):
+        print(f"Название книги: {self.name}")
+        print(f"Год выпуска: {self.year}")
+        print(f"Издатель: {self.publisher}")
+        print(f"Жанр: {self.genre}")
+        print(f"Автор: {self.author}")
+        print(f"Цена: {self.price}")      
+      
+    # Методы для доступа к полям
+    def get_name(self):
+        return self.name
+
+    def get_year(self):
+        return self.year
+
+    def get_publisher(self):
+        return self.publisher
+
+    def get_genre(self):
+        return self.genre
+
+    def get_author(self):
+        return self.author
+
+    def get_price(self):
+        return self.price 
+      
+    # Методы для изменения полей
+    def set_name(self, name):
+        self.name = name
+
+    def set_year(self, year):
+        self.year = year
+
+    def set_publisher(self, publisher):
+        self.publisher = publisher
+
+    def set_genre(self, genre):
+        self.genre = genre
+
+    def set_author(self, author):
+        self.author = author
+
+    def set_price(self, price):
+        self.price = price
+
+
+# Пример использования
+if __name__ == "__main__":
+    book = Book()
+    book.input_data()
+    print("\nИнформация о книге:")
+    book.display_data()
+
+    # Изменение данных через сеттеры
+    book.set_price(1500)
+    book.set_author("А.С. Пушкин")
+
+    print("\nОбновленная информация о книге:")
+    print(f"Новая цена: {book.get_price()}")  
+    print(f"Новый автор: {book.get_author()}") 
+    
+#задание 3
+class Stadium:
+    def __init__(self, name="", date="", country="", city="", capacity=0):
+        self.name = name
+        self.date = date
+        self.country = country
+        self.city = city
+        self.capacity = capacity
+      
+    def input_data(self):
+        self.name = input("Введите название стадиона: ")
+        self.date = input("Введите дату открытия: ")
+        self.country = input("Введите страну: ")
+        self.city = input("Введите город: ")  
+        self.capacity = int(input("Введите вместимость: "))
+      
+    def display_data(self):
+        print(f"\nИнформация о стадионе:")
+        print(f"Название стадиона: {self.name}")
+        print(f"Дата открытия: {self.date}")
+        print(f"Страна: {self.country}")
+        print(f"Город: {self.city}")
+        print(f"Вместимость: {self.capacity} человек")
+      
+    # Методы для доступа к полям
+    def get_name(self):
+        return self.name
+
+    def get_date(self):
+        return self.date
+
+    def get_country(self):
+        return self.country
+
+    def get_city(self):
+        return self.city
+
+    def get_capacity(self):
+        return self.capacity
+      
+    # Методы для изменения полей
+    def set_name(self, name):
+        self.name = name
+
+    def set_date(self, date):
+        self.date = date
+
+    def set_country(self, country):
+        self.country = country
+
+    def set_city(self, city):
+        self.city = city
+
+    def set_capacity(self, capacity):
+        self.capacity = capacity
+
+
+#MAIN
+if __name__ == "__main__":
+    stadium = Stadium()
+    stadium.input_data()
+    stadium.display_data()
+
+    stadium.set_capacity(80000)
+    stadium.set_city("Москва")
+
+    print("\nОбновленная информация о стадионе:")
+    print(f"Новая вместимость: {stadium.get_capacity()} человек")  
+    print(f"Обновленный город: {stadium.get_city()}")
