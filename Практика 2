@@ -1,0 +1,99 @@
+#задание 1
+class Guide:
+    def __init__(self):
+        self.code = [199,288,377,416,525,634,743,582,691]
+        self.tel = ["11111","22222",'33333','44444',
+                     '55555','66666','77777','88888','99999']
+    def sortG(self, value):
+        if value == 1:
+            for j in range(len(self.code)-1):
+                for i in range(len(self.code) - 1):
+                    if self.code[i] > self.code[i+1] and self.code[i+1] == None:
+                        self.code[i],self.code[i+1] = self.code[i+1],self.code[i]
+                        self.tel[i], self.tel[i + 1] = self.tel[i + 1], self.tel[i]
+        else:
+            for j in range(len(self.code)-1):
+                for i in range(len(self.code) - 1):
+                    if self.tel[i] > self.tel[i+1] and self.tel[i+1] == None:
+                        self.code[i],self.code[i+1] = self.code[i+1],self.code[i]
+                        self.tel[i], self.tel[i + 1] = self.tel[i + 1], self.tel[i]
+
+    def printG(self):
+        for i in range(len(self.code)-1):
+            print(f"Code:{self.code[i]},tel:{self.tel[i]}")
+    def menuG(self):
+        while True:
+            print("1. Отсортировать по идентификационным кодам \n"
+                  "2. Отсортировать по номерам телефона \n"
+                  "3. Вывести список пользователей с кодами и телефонами \n"
+                  "0. Выход")
+            user_change = int(input("Ваш выбор:"))
+            match user_change:
+                case 1:
+                    self.sortG(1)
+                case 2:
+                    self.sortG(-1)
+                case 3:
+                    self.printG()
+                case 0:
+                    break
+
+guide = Guide()
+guide.menuG()
+
+#задание 2
+class BookManager:
+    def __init__(self):
+        self.titles = ["Война и мир", "Преступление и наказание", "1984", 
+                      "Мастер и Маргарита", "Гарри Поттер"]
+        self.years = [1869, 1866, 1949, 1967, 1997]
+    
+    def sort_books(self, by_year=True):
+        # Сортировка пузырьком
+        n = len(self.titles)
+        for i in range(n-1):
+            for j in range(n-i-1):
+                if by_year:
+                    # Сортировка по годам
+                    if self.years[j] > self.years[j+1]:
+                        self.years[j], self.years[j+1] = self.years[j+1], self.years[j]
+                        self.titles[j], self.titles[j+1] = self.titles[j+1], self.titles[j]
+                else:
+                    # Сортировка по названиям
+                    if self.titles[j] > self.titles[j+1]:
+                        self.years[j], self.years[j+1] = self.years[j+1], self.years[j]
+                        self.titles[j], self.titles[j+1] = self.titles[j+1], self.titles[j]
+    
+    def print_books(self):
+        print("\nСписок книг:")
+        for i in range(len(self.titles)):
+            print(f"Название: {self.titles[i]}, Год выпуска: {self.years[i]}")
+    
+    def menu(self):
+        while True:
+            print("\nМеню:")
+            print("1. Отсортировать по названиям книг")
+            print("2. Отсортировать по годам выпуска")
+            print("3. Вывести список книг")
+            print("0. Выход")
+            
+            choice = input("Ваш выбор: ")
+            
+            if choice == "1":
+                self.sort_books(by_year=False)
+                print("Сортировка по названиям выполнена!")
+            elif choice == "2":
+                self.sort_books(by_year=True)
+                print("Сортировка по годам выполнена!")
+            elif choice == "3":
+                self.print_books()
+            elif choice == "0":
+                print("Выход из программы")
+                break
+            else:
+                print("Неверный ввод, попробуйте снова")
+
+#MAIN
+if __name__ == "__main__":
+    manager = BookManager()
+    manager.menu()
