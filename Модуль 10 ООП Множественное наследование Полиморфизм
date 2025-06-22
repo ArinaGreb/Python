@@ -1,0 +1,186 @@
+#задание 1
+import math
+
+class Figure:
+    def area(self):
+        raise NotImplementedError
+
+class Rectangle(Figure):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+
+class Circle(Figure):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        return math.pi * self.radius ** 2
+
+class RightTriangle(Figure):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+    
+    def area(self):
+        return 0.5 * self.base * self.height
+
+class Trapezoid(Figure):
+    def __init__(self, base1, base2, height):
+        self.base1 = base1
+        self.base2 = base2
+        self.height = height
+    
+    def area(self):
+        return 0.5 * (self.base1 + self.base2) * self.height
+#задание 2
+class Rectangle(Figure):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def __int__(self):
+        return int(self.area())
+    
+    def __str__(self):
+        return f"Прямоугольник: ширина={self.width}, высота={self.height}, площадь={self.area()}"
+
+class Circle(Figure):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        return math.pi * self.radius ** 2
+    
+    def __int__(self):
+        return int(self.area())
+    
+    def __str__(self):
+        return f"Круг: радиус={self.radius}, площадь={self.area():.2f}"
+
+class RightTriangle(Figure):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+    
+    def area(self):
+        return 0.5 * self.base * self.height
+    
+    def __int__(self):
+        return int(self.area())
+    
+    def __str__(self):
+        return f"Прямоугольный треугольник: основание={self.base}, высота={self.height}, площадь={self.area()}"
+
+class Trapezoid(Figure):
+    def __init__(self, base1, base2, height):
+        self.base1 = base1
+        self.base2 = base2
+        self.height = height
+    
+    def area(self):
+        return 0.5 * (self.base1 + self.base2) * self.height
+    
+    def __int__(self):
+        return int(self.area())
+    
+    def __str__(self):
+        return f"Трапеция: основание1={self.base1}, основание2={self.base2}, высота={self.height}, площадь={self.area()}"
+        
+#задание 3
+
+import json
+
+class Shape:
+    def show(self):
+        raise NotImplementedError("Метод show() должен быть переопределен в подклассе")
+    
+    def save(self, filename):
+        data = self.__dict__
+        data['class'] = self.__class__.__name__
+        
+        with open(filename, 'a') as f:
+            f.write(json.dumps(data) + '\n')
+    
+    @staticmethod
+    def load(filename):
+        shapes = []
+        with open(filename, 'r') as f:
+            for line in f:
+                data = json.loads(line.strip())
+                class_name = data.pop('class')
+                
+                if class_name == 'Square':
+                    shape = Square(**data)
+                elif class_name == 'Rectangle':
+                    shape = Rectangle(**data)
+                elif class_name == 'Circle':
+                    shape = Circle(**data)
+                elif class_name == 'Ellipse':
+                    shape = Ellipse(**data)
+                else:
+                    continue
+                
+                shapes.append(shape)
+        return shapes
+
+class Square(Shape):
+    def __init__(self, x, y, side):
+        self.x = x
+        self.y = y
+        self.side = side
+    
+    def show(self):
+        print(f"Квадрат: координаты верхнего левого угла=({self.x}, {self.y}), сторона={self.side}")
+
+class Rectangle(Shape):
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    
+    def show(self):
+        print(f"Прямоугольник: координаты верхнего левого угла=({self.x}, {self.y}), ширина={self.width}, высота={self.height}")
+
+class Circle(Shape):
+    def __init__(self, x, y, radius):
+        self.x = x
+        self.y = y
+        self.radius = radius
+    
+    def show(self):
+        print(f"Окружность: центр=({self.x}, {self.y}), радиус={self.radius}")
+
+class Ellipse(Shape):
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    
+    def show(self):
+        print(f"Эллипс: координаты верхнего угла описанного прямоугольника=({self.x}, {self.y}), ширина={self.width}, высота={self.height}")
+
+#MAIN
+if __name__ == "__main__":
+    shapes = [
+        Square(10, 20, 50),
+        Rectangle(30, 40, 100, 50),
+        Circle(50, 60, 30),
+        Ellipse(70, 80, 120, 60)
+    ]
+    
+    filename = "shapes.txt"
+    for shape in shapes:
+        shape.save(filename)
+
+    print("\nЗагруженные фигуры:")
+    for shape in loaded_shapes:
+        shape.show()
