@@ -1,0 +1,286 @@
+#Задание 1
+class Device:
+    """Базовый класс устройства"""
+    def __init__(self, brand, model, power):
+        self.brand = brand      # производитель
+        self.model = model      # модель
+        self.power = power      # мощность в ваттах
+        self.is_on = False      # вкл/выкл
+    
+    def turn_on(self):
+        self.is_on = True
+        print(f"{self.brand} {self.model} включен")
+    
+    def turn_off(self):
+        self.is_on = False
+        print(f"{self.brand} {self.model} выключен")
+    
+    def info(self):
+        return f"{self.brand} {self.model}, мощность: {self.power}W, состояние: {'вкл' if self.is_on else 'выкл'}"
+
+class CoffeeMachine(Device):
+    def __init__(self, brand, model, power, water_tank):
+        super().__init__(brand, model, power)
+        self.water_tank = water_tank  # объем бака для воды
+        self.coffee_beans = 0         # количество кофейных зерен
+    
+    def add_beans(self, amount):
+        self.coffee_beans += amount
+        print(f"Добавлено {amount}g кофейных зерен. Всего: {self.coffee_beans}g")
+    
+    def make_coffee(self):
+        if not self.is_on:
+            print("Сначала включите кофемашину!")
+            return
+        
+        if self.coffee_beans < 10:
+            print("Недостаточно кофейных зерен!")
+            return
+        
+        if self.water_tank < 100:
+            print("Недостаточно воды!")
+            return
+        
+        self.coffee_beans -= 10
+        print("Ваш кофе готов! Приятного аппетита!")
+    
+    def info(self):
+        base_info = super().info()
+        return f"{base_info}, бак для воды: {self.water_tank}ml, кофейные зерна: {self.coffee_beans}g"
+
+class Blender(Device):
+    def __init__(self, brand, model, power, speed_levels):
+        super().__init__(brand, model, power)
+        self.speed_levels = speed_levels  # количество скоростей
+        self.current_speed = 0            # текущая скорость
+    
+    def set_speed(self, speed):
+        if not self.is_on:
+            print("Сначала включите блендер!")
+            return
+        
+        if speed < 0 or speed > self.speed_levels:
+            print(f"Недопустимая скорость! Доступно от 0 до {self.speed_levels}")
+            return
+        
+        self.current_speed = speed
+        print(f"Установлена скорость {speed}")
+    
+    def blend(self):
+        if not self.is_on or self.current_speed == 0:
+            print("Сначала включите блендер и установите скорость!")
+            return
+        
+        print(f"Взбивание на скорости {self.current_speed}... Готово!")
+    
+    def info(self):
+        base_info = super().info()
+        return f"{base_info}, скорости: {self.speed_levels}, текущая скорость: {self.current_speed}"
+
+class MeatGrinder(Device):
+    def __init__(self, brand, model, power, productivity):
+        super().__init__(brand, model, power)
+        self.productivity = productivity  # кг/час
+        self.has_meat = False            # есть ли мясо
+    
+    def add_meat(self):
+        self.has_meat = True
+        print("Мясо добавлено")
+    
+    def grind(self):
+        if not self.is_on:
+            print("Сначала включите мясорубку!")
+            return
+        
+        if not self.has_meat:
+            print("Сначала добавьте мясо!")
+            return
+        
+        print(f"Измельчение мяса с производительностью {self.productivity} кг/час... Готово!")
+        self.has_meat = False
+    
+    def info(self):
+        base_info = super().info()
+        return f"{base_info}, производительность: {self.productivity} кг/час, мясо: {'есть' if self.has_meat else 'нет'}"
+
+#MAIN
+coffee_machine = CoffeeMachine("Philips", "HD8827", 1500, 1000)
+blender = Blender("Bosch", "MSM66110", 600, 5)
+meat_grinder = MeatGrinder("Moulinex", "ME626", 1800, 2)
+
+devices = [coffee_machine, blender, meat_grinder]
+
+for device in devices:
+    print(device.info())
+    device.turn_on()
+    print(device.info())
+    print()
+    
+#Задание 2
+
+class Ship:
+    def __init__(self, name, year, displacement):
+        self.name = name              # название 
+        self.year = year              # год
+        self.displacement = displacement  # тонны
+        self.is_sailing = False       # в плавании?
+    
+    def sail(self):
+        self.is_sailing = True
+        print(f"{self.name} отправился в плавание")
+    
+    def dock(self):
+        self.is_sailing = False
+        print(f"{self.name} вернулся в порт")
+    
+    def info(self):
+        return (f"{self.name}, год постройки: {self.year}, " +
+                f"водоизмещение: {self.displacement} тонн, " +
+                f"состояние: {'в плавании' if self.is_sailing else 'в порту'}")
+
+class Frigate(Ship):
+    def __init__(self, name, year, displacement, missile_count):
+        super().__init__(name, year, displacement)
+        self.missile_count = missile_count  
+    
+    def fire_missile(self):
+        if not self.is_sailing:
+            print("Сначала выйдите в море!")
+            return
+        
+        if self.missile_count == 0:
+            print("Ракеты закончились!")
+            return
+        
+        self.missile_count -= 1
+        print("Ракета выпущена! Осталось ракет:", self.missile_count)
+    
+    def info(self):
+        base_info = super().info()
+        return f"{base_info}, тип: фрегат, ракет: {self.missile_count}"
+
+class Destroyer(Ship):
+    def __init__(self, name, year, displacement, gun_caliber):
+        super().__init__(name, year, displacement)
+        self.gun_caliber = gun_caliber  # калибр орудий в мм
+    
+    def fire_guns(self):
+        if not self.is_sailing:
+            print("Сначала выйдите в море!")
+            return
+        
+        print(f"Залп из орудий {self.gun_caliber}mm! БА-БАХ!")
+    
+    def info(self):
+        base_info = super().info()
+        return f"{base_info}, тип: эсминец, калибр орудий: {self.gun_caliber}mm"
+
+class Cruiser(Ship):
+    def __init__(self, name, year, displacement, aircraft_count):
+        super().__init__(name, year, displacement)
+        self.aircraft_count = aircraft_count  # количество самолетов
+    
+    def launch_aircraft(self):
+        if not self.is_sailing:
+            print("Сначала выйдите в море!")
+            return
+        
+        if self.aircraft_count == 0:
+            print("Самолеты закончились!")
+            return
+        
+        self.aircraft_count -= 1
+        print("Самолет запущен! Осталось самолетов:", self.aircraft_count)
+    
+    def info(self):
+        base_info = super().info()
+        return f"{base_info}, тип: крейсер, самолетов: {self.aircraft_count}"
+
+#MAIN
+frigate = Frigate("Смелый", 2015, 4500, 32)
+destroyer = Destroyer("Грозный", 2010, 8500, 130)
+cruiser = Cruiser("Москва", 2000, 12000, 8)
+
+ships = [frigate, destroyer, cruiser]
+
+for ship in ships:
+    print(ship.info())
+    ship.sail()
+    print(ship.info())
+    
+    if isinstance(ship, Frigate):
+        ship.fire_missile()
+    elif isinstance(ship, Destroyer):
+        ship.fire_guns()
+    elif isinstance(ship, Cruiser):
+        ship.launch_aircraft()
+    
+    ship.dock()
+    print()
+    
+#Задание 3
+
+class Money:
+    def __init__(self, dollars=0, cents=0):
+        self.set_amount(dollars, cents)
+    
+    def set_amount(self, dollars, cents):
+        if not isinstance(dollars, int) or not isinstance(cents, int):
+            raise ValueError("Доллары и центы должны быть целыми числами")
+        
+        if dollars < 0 or cents < 0:
+            raise ValueError("Доллары и центы не могут быть отрицательными")
+        
+        self.dollars = dollars + cents // 100
+        self.cents = cents % 100
+    
+    def add(self, other):
+        total_cents = (self.dollars + other.dollars) * 100 + self.cents + other.cents
+        new_dollars = total_cents // 100
+        new_cents = total_cents % 100
+        return Money(new_dollars, new_cents)
+    
+    def subtract(self, other):
+        total_cents = (self.dollars - other.dollars) * 100 + (self.cents - other.cents)
+        if total_cents < 0:
+            raise ValueError("Результат не может быть отрицательным")
+        
+        new_dollars = total_cents // 100
+        new_cents = total_cents % 100
+        return Money(new_dollars, new_cents)
+    
+    def __str__(self):
+        return f"${self.dollars}.{self.cents:02d}"
+    
+    def display(self):
+        print(str(self))
+    
+    def get_dollars(self):
+        return self.dollars
+    
+    def get_cents(self):
+        return self.cents
+    
+    def get_total_cents(self):
+        return self.dollars * 100 + self.cents
+
+#MAIN
+money1 = Money(10, 50)
+money2 = Money(2, 75)
+
+print("Деньги 1:", money1)
+print("Деньги 2:", money2)
+
+money1.display()
+
+sum_money = money1.add(money2)
+print("Сумма:", sum_money)
+
+diff_money = money1.subtract(money2)
+print("Разница:", diff_money)
+
+money1.set_amount(20, 150)
+print("Новая сумма:", money1) 
+
+print(f"Доллары: {money1.get_dollars()}, центы: {money1.get_cents()}")
+print("Всего центов:", money1.get_total_cents())
