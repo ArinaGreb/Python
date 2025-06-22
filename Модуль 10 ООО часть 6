@@ -1,0 +1,166 @@
+#задание 1
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def circle_info(self):
+        return f"Окружность радиусом {self.radius}"
+
+class Square:
+    def __init__(self, side):
+        self.side = side
+    
+    def square_info(self):
+        return f"Квадрат со стороной {self.side}"
+
+class CircleInSquare(Circle, Square):
+    def __init__(self, side):
+        radius = side / 2
+        Circle.__init__(self, radius)
+        Square.__init__(self, side)
+    
+    def info(self):
+        return f"{self.square_info()}, в который вписана {self.circle_info()}"
+
+#MAIN
+cis = CircleInSquare(10)
+print(cis.info())
+
+#задание 2
+class Wheels:
+    def __init__(self, count):
+        self.wheels_count = count
+    
+    def wheels_info(self):
+        return f"Колес: {self.wheels_count}"
+
+class Engine:
+    def __init__(self, power):
+        self.power = power
+    
+    def engine_info(self):
+        return f"Мощность двигателя: {self.power} л.с."
+
+class Doors:
+    def __init__(self, count):
+        self.doors_count = count
+    
+    def doors_info(self):
+        return f"Дверей: {self.doors_count}"
+
+class Car(Wheels, Engine, Doors):
+    def __init__(self, brand, wheels, power, doors):
+        self.brand = brand
+        Wheels.__init__(self, wheels)
+        Engine.__init__(self, power)
+        Doors.__init__(self, doors)
+    
+    def car_info(self):
+        return (f"Автомобиль {self.brand}. " +
+                f"{self.wheels_info()}. " +
+                f"{self.engine_info()}. " +
+                f"{self.doors_info()}")
+
+#MAIN
+my_car = Car("Toyota", 4, 150, 5)
+print(my_car.car_info())
+#задание 3
+class Pet:
+    def __init__(self, name, breed):
+        self.name = name
+        self.breed = breed
+    
+    def sound(self):
+        raise NotImplementedError
+    
+    def show(self):
+        return f"Имя: {self.name}"
+    
+    def type(self):
+        return f"Порода: {self.breed}"
+
+class Dog(Pet):
+    def sound(self):
+        return "Гав-гав!"
+    
+    def type(self):
+        return f"Собака породы {self.breed}"
+
+class Cat(Pet):
+    def sound(self):
+        return "Мяу!"
+    
+    def type(self):
+        return f"Кошка породы {self.breed}"
+
+class Parrot(Pet):
+    def sound(self):
+        return "Чирик-чирик!"
+    
+    def type(self):
+        return f"Попугай вида {self.breed}"
+
+class Hamster(Pet):
+    def sound(self):
+        return "Пи-пи-пи!"
+    
+    def type(self):
+        return f"Хомяк вида {self.breed}"
+
+#MAIN
+pets = [
+    Dog("Бобик", "Овчарка"),
+    Cat("Мурка", "Сиамская"),
+    Parrot("Кеша", "Волнистый"),
+    Hamster("Пушистик", "Джунгарский")
+]
+
+for pet in pets:
+    print(pet.show())
+    print(pet.type())
+    print("Звук:", pet.sound())
+    print()
+#задание 4
+class Employer:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def print_info(self):
+        return "This is Employer class"
+    
+    def __str__(self):
+        return self.print_info()
+    
+    def __int__(self):
+        return self.age
+
+class President(Employer):
+    def print_info(self):
+        return f"Президент {self.name}, возраст {self.age}"
+
+class Manager(Employer):
+    def print_info(self):
+        return f"Менеджер {self.name}, возраст {self.age}"
+
+class Worker(Employer):
+    def print_info(self):
+        return f"Рабочий {self.name}, возраст {self.age}"
+
+#MAIN
+employees = [
+    President("Иван Иванов", 55),
+    Manager("Петр Петров", 40),
+    Worker("Сидор Сидоров", 30)
+]
+
+for emp in employees:
+    print(emp.print_info())
+#задание 5
+emp = President("Иван Иванов", 55)
+print(str(emp))
+print(int(emp)
+
+worker = Worker("Алексей Алексеев", 25)
+print(str(worker))
+print(int(worker))
