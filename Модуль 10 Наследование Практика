@@ -1,0 +1,162 @@
+# задание 1
+class Human:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def introduce(self):
+        print(f"Привет, меня зовут {self.name}, мне {self.age} лет.")
+
+class Builder(Human):
+    def __init__(self, name, age, specialty):
+        super().__init__(name, age)
+        self.specialty = specialty
+    
+    def work(self):
+        print(f"{self.name} строит здания как {self.specialty}.")
+
+class Sailor(Human):
+    def __init__(self, name, age, ship_type):
+        super().__init__(name, age)
+        self.ship_type = ship_type
+    
+    def sail(self):
+        print(f"{self.name} плавает на {self.ship_type}.")
+
+class Pilot(Human):
+    def __init__(self, name, age, aircraft_type):
+        super().__init__(name, age)
+        self.aircraft_type = aircraft_type
+    
+    def fly(self):
+        print(f"{self.name} управляет {self.aircraft_type}.")
+#MAIN
+person = Human("Мария", 30)
+builder = Builder("Алексей", 45, "электрик")
+sailor = Sailor("Дмитрий", 28, "танкере")
+pilot = Pilot("Ольга", 32, "Боинг 747")
+
+print("\n--- Задание 1: Human и профессии ---")
+
+person.introduce()
+
+print("\nСтроитель:")
+builder.introduce()
+builder.work()
+
+print("\nМоряк:")
+sailor.introduce()
+sailor.sail()
+
+print("\nПилот:")
+pilot.introduce()
+pilot.fly()
+
+# задание 2
+class Passport:
+    def __init__(self, name, country, passport_number, birth_date):
+        self.name = name
+        self.country = country
+        self.passport_number = passport_number
+        self.birth_date = birth_date
+    
+    def show_info(self):
+        print(f"Паспорт гражданина {self.country}")
+        print(f"Имя: {self.name}")
+        print(f"Номер паспорта: {self.passport_number}")
+        print(f"Дата рождения: {self.birth_date}")
+
+class ForeignPassport(Passport):
+    def __init__(self, name, country, passport_number, birth_date, foreign_number, visas=None):
+        super().__init__(name, country, passport_number, birth_date)
+        self.foreign_number = foreign_number
+        self.visas = visas if visas else []
+    
+    def add_visa(self, visa_info):
+        self.visas.append(visa_info)
+    
+    def show_info(self):
+        super().show_info()
+        print(f"Номер загранпаспорта: {self.foreign_number}")
+        print("Визы:")
+        for visa in self.visas:
+            print(f"- {visa}")
+#MAIN
+russian_passport = Passport("Иван Петров", "Россия", "4501 123456", "15.05.1985")
+foreign_passport = ForeignPassport("Иван Петров", "Россия", "4501 123456", "15.05.1985", "63 9876543")
+
+foreign_passport.add_visa("Шенген (Франция, 2023-2024)")
+foreign_passport.add_visa("США (B1/B2, 2024-2029)")
+
+print("\n--- Задание 2: Passport ---")
+
+print("\nВнутренний паспорт:")
+russian_passport.show_info()
+
+print("\nЗаграничный паспорт:")
+foreign_passport.show_info()
+# задание 3
+class Animal:
+    def __init__(self, name, habitat):
+        self.name = name
+        self.habitat = habitat
+    
+    def eat(self):
+        print(f"{self.name} кушает.")
+    
+    def sleep(self):
+        print(f"{self.name} спит.")
+
+class Tiger(Animal):
+    def __init__(self, name, habitat, stripe_count):
+        super().__init__(name, habitat)
+        self.stripe_count = stripe_count
+    
+    def hunt(self):
+        print(f"{self.name} охотится в {self.habitat}.")
+    
+    def roar(self):
+        print("Ррррррр!")
+
+class Crocodile(Animal):
+    def __init__(self, name, habitat, length):
+        super().__init__(name, habitat)
+        self.length = length
+    
+    def swim(self):
+        print(f"{self.name} плавает в {self.habitat}.")
+    
+    def bask(self):
+        print(f"{self.name} греется на солнце.")
+
+class Kangaroo(Animal):
+    def __init__(self, name, habitat, jump_height):
+        super().__init__(name, habitat)
+        self.jump_height = jump_height
+    
+    def jump(self):
+        print(f"{self.name} прыгает на {self.jump_height} метров в высоту!")
+    
+    def carry_baby(self):
+        print(f"{self.name} носит детеныша в сумке.")
+#MAIN
+tiger = Tiger("Амур", "дальневосточная тайга", 120)
+crocodile = Crocodile("Гена", "пресноводные реки", 3.5)
+kangaroo = Kangaroo("Джек", "австралийские равнины", 2.8)
+
+print("\n--- Задание 3: Животные ---")
+
+print("\nТигр:")
+tiger.eat()
+tiger.hunt()
+tiger.roar()
+
+print("\nКрокодил:")
+crocodile.sleep()
+crocodile.swim()
+crocodile.bask()
+
+print("\nКенгуру:")
+kangaroo.eat()
+kangaroo.jump()
+kangaroo.carry_baby()
