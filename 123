@@ -1,0 +1,146 @@
+# задание 1
+class SimpleStatistics:
+    def __init__(self, numbers):
+        self.numbers = sorted(numbers)
+    
+    def mean(self):
+        return sum(self.numbers) / len(self.numbers)
+    
+    def median(self):
+        n = len(self.numbers)
+        if n % 2 == 1:
+            return self.numbers[n//2]
+        else:
+            return (self.numbers[n//2 - 1] + self.numbers[n//2]) / 2
+    
+    def mode(self):
+        frequency = {}
+        for num in self.numbers:
+            frequency[num] = frequency.get(num, 0) + 1
+        
+        max_freq = max(frequency.values())
+        modes = [num for num, freq in frequency.items() if freq == max_freq]
+        
+        return modes if len(modes) < len(self.numbers) else []
+    
+    def range(self):
+        return max(self.numbers) - min(self.numbers)
+    
+    def variance(self):
+        m = self.mean()
+        return sum((x - m) ** 2 for x in self.numbers) / (len(self.numbers) - 1)
+    
+    def standard_deviation(self):
+        return self.variance() ** 0.5
+        
+#MAIN
+numbers = [12, 15, 12, 96, 34, 23, 15, 12, 34, 55]
+stats = SimpleStatistics(numbers)
+
+print("1. Анализ числовых данных:")
+print(f"- Данные: {numbers}")
+print(f"- Среднее значение: {stats.mean():.2f}")
+print(f"- Медиана: {stats.median()}")
+print(f"- Мода (наиболее частые значения): {stats.mode()}")
+print(f"- Размах данных: {stats.range()}")
+print(f"- Дисперсия: {stats.variance():.2f}")
+print(f"- Стандартное отклонение: {stats.standard_deviation():.2f}")
+        
+# задание 2
+class FrequencyDistribution:
+    def __init__(self, data):
+        self.data = data
+    
+    def calculate_frequencies(self):
+        frequencies = {}
+        for item in self.data:
+            frequencies[item] = frequencies.get(item, 0) + 1
+        return frequencies
+    
+    def display_frequency_table(self):
+        freq = self.calculate_frequencies()
+        print("Элемент\tЧастота")
+        print("----------------")
+        for item, count in freq.items():
+            print(f"{item}\t{count}")
+    
+    def get_most_frequent(self):
+        freq = self.calculate_frequencies()
+        max_count = max(freq.values())
+        return [item for item, count in freq.items() if count == max_count]
+#MAIN
+fruits = ["яблоко", "банан", "апельсин", "яблоко", "банан", "яблоко", "киви"]
+fruit_stats = FrequencyDistribution(fruits)
+
+print("\n2. Анализ частотности данных:")
+print(f"- Исходные данные: {fruits}")
+
+print("\nТаблица частот:")
+fruit_stats.display_frequency_table()
+
+print(f"\n- Самые частые элементы: {fruit_stats.get_most_frequent()}")
+# задание 3
+import math
+import matplotlib.pyplot as plt
+
+class Correlation:
+    def __init__(self, x, y):
+        if len(x) != len(y):
+            raise ValueError("Списки X и Y должны быть одинаковой длины")
+        self.x = x
+        self.y = y
+    
+    def pearson_correlation(self):
+        n = len(self.x)
+        sum_x = sum(self.x)
+        sum_y = sum(self.y)
+        sum_xy = sum(x * y for x, y in zip(self.x, self.y))
+        sum_x2 = sum(x ** 2 for x in self.x)
+        sum_y2 = sum(y ** 2 for y in self.y)
+        
+        numerator = sum_xy - (sum_x * sum_y) / n
+        denominator_x = math.sqrt(sum_x2 - (sum_x ** 2) / n)
+        denominator_y = math.sqrt(sum_y2 - (sum_y ** 2) / n)
+        
+        return numerator / (denominator_x * denominator_y)
+    
+    def spearman_correlation(self):
+        def rank(data):
+            sorted_data = sorted(data)
+            return [sorted_data.index(x) + 1 for x in data]
+        
+        rank_x = rank(self.x)
+        rank_y = rank(self.y)
+        n = len(self.x)
+        
+        d_squared = sum((rx - ry) ** 2 for rx, ry in zip(rank_x, rank_y))
+        
+        return 1 - (6 * d_squared) / (n * (n ** 2 - 1))
+    
+    def covariance(self):
+        mean_x = sum(self.x) / len(self.x)
+        mean_y = sum(self.y) / len(self.y)
+        return sum((x - mean_x) * (y - mean_y) for x, y in zip(self.x, self.y)) / len(self.x)
+    
+    def plot_scatter(self):
+        plt.scatter(self.x, self.y)
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.title('Диаграмма рассеяния X и Y')
+        plt.show()
+        
+#MAIN
+x_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+y_data = [2, 4, 5, 7, 8, 10, 11, 13, 14, 16]
+correlation = Correlation(x_data, y_data)
+
+print("\n3. Анализ корреляции:")
+print(f"- Данные X: {x_data}")
+print(f"- Данные Y: {y_data}")
+
+print(f"\n- Коэффициент корреляции Пирсона: {correlation.pearson_correlation():.3f}")
+print(f"- Коэффициент корреляции Спирмена: {correlation.spearman_correlation():.3f}")
+print(f"- Ковариация: {correlation.covariance():.3f}")
+
+print("\n- Строим диаграмму рассеяния...")
+correlation.plot_scatter()
