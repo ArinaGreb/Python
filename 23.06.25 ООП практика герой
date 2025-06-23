@@ -1,0 +1,101 @@
+class HERO:
+    def __init__(self, speed, intelligence, strength, agility, luck, attack_power):
+
+        # level,name,nickname, origin, skills, abilities, weaknesses, speed,
+        # agility)
+
+        #основные аттрибуты
+        self.speed = speed # скорость
+        self.intelligence = intelligence #интеллект
+        self.strength = strength #сила
+        self.agility = agility #ловкость
+        self.luck = luck  #удача
+        self.attack_power = attack_power #атакующая мощь
+        self.strength = strength
+        self.actions = [self.Jump, self.Move, self.Attack, self.Deffence]
+    def Jump(self):
+        print(f"{self.name} прыгает")
+        return self.agility * 0.5  # Высота прыжка
+    def Move(self):
+        print(f"{self.name} двигается")
+        return self.speed
+    def Attack(self):
+        print(f"{self.name} атакует")
+
+    def Deffence(self):
+        print(f"{self.name} защищает")
+
+#NPC - базовый класс с параметрами для игровых персонажей и врагов
+class NPC:
+    pass
+#класс для реализации Лучника
+class Archer(HERO):
+    def __init__(self,speed = 7, intelligence = 3, strength = 10, agility = 3, luck = 5, attack_power = 7):
+        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
+        self.ability = [self.Shot_Arche, self.Dodge, self.Ultimate]
+    def Shot_Arche(self):
+        pass
+    def Dodge(self):
+        pass
+    def Ultimate(self):
+        pass
+#класс для реализации целителя
+class Healer(HERO):
+    def __init__(self,speed = 5, intelligence = 4, strength = 1, agility = 10, luck = 3, attack_power = 5):
+        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
+        self.ability = [self.Heal, self.Attrack_Middle, self.Ultimate]
+    def Heal(self):
+        pass
+    def Attrack_Middle(self):
+        pass
+    def Ultimate(self):
+        pass
+#класс для реализации мага
+class Mag(HERO):
+    def __init__(self,speed = 10, intelligence = 3, strength = 4, agility = 7, luck = 6, attack_power = 7):
+        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
+        self.ability = [self.FireBoll, self.Magic_Shid, self.Ultimate]
+    def FireBoll(self):
+        pass
+    def Magic_Shid(self):
+        pass
+    def Ultimate(self):
+        pass
+#класс для реализации воина
+class Warrior(HERO):
+    def __init__(self,speed = 4, intelligence = -1, strength = 5, agility = 7, luck = 5, attack_power = 10):
+        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
+        self.ability = [self.Deffence_Shid(), self.Attrack_Sword, self.Ultimate]
+    def Deffence_Shid(self):
+        pass
+    def Attrack_Sword(self):
+        pass
+    def Ultimate(self):
+        pass
+
+#класс-Меню_Выбора_Игрового_Персонажа
+class Game_Select_HERO:
+    def __init__(self):
+        self.name = ''
+    def HERO_Select_User(self):
+        self.name = input("Введите имя: ")
+#класс-Меню_Игоровго_Процесса
+class Game_Process_Change:
+    gameSelectHERO = gameSelectHERO()
+    HERO = Warrior(gameSelectHERO.name)
+
+
+
+
+#MAIN Для запуска
+def main():
+    pass
+if __name__ == "__main__":
+
+        # #аттрибуты персонажа
+        # self.speed = speed #скорость
+        # self.intelligence = intelligence #интелект
+        # self.strength = strength #сила
+        # self.agility = agility #ловкость
+        # self.luck = luck #удача
+        # self.attack_power = attack_power #сила атаки
