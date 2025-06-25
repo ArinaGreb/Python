@@ -1,0 +1,271 @@
+#Задание 1
+class Number:
+    def __init__(self, value):
+        self.value = value
+    
+    # Перегрузка оператора (+)
+    def __add__(self, other):
+        if isinstance(other, Number):
+            return Number(self.value + other.value)
+        elif isinstance(other, (int, float)):
+            return Number(self.value + other)
+        else:
+            raise TypeError("Unsupported operand type for +")
+    
+    # Перегрузка оператора (-)
+    def __sub__(self, other):
+        if isinstance(other, Number):
+            return Number(self.value - other.value)
+        elif isinstance(other, (int, float)):
+            return Number(self.value - other)
+        else:
+            raise TypeError("Unsupported operand type for -")
+    
+    # Перегрузка оператора (*)
+    def __mul__(self, other):
+        if isinstance(other, Number):
+            return Number(self.value * other.value)
+        elif isinstance(other, (int, float)):
+            return Number(self.value * other)
+        else:
+            raise TypeError("Unsupported operand type for *")
+    
+    # Перегрузка оператора (/)
+    def __truediv__(self, other):
+        if isinstance(other, Number):
+            if other.value == 0:
+                raise ZeroDivisionError("Division by zero")
+            return Number(self.value / other.value)
+        elif isinstance(other, (int, float)):
+            if other == 0:
+                raise ZeroDivisionError("Division by zero")
+            return Number(self.value / other)
+        else:
+            raise TypeError("Unsupported operand type for /")
+    
+    def __str__(self):
+        return str(self.value)
+
+# MAIN
+num1 = Number(10)
+num2 = Number(5)
+
+print(f"Сложение: {num1 + num2}")       
+print(f"Вычитание: {num1 - num2}")      
+print(f"Умножение: {num1 * num2}")      
+print(f"Деление: {num1 / num2}")       
+
+#Задание 2
+class Fraction:
+    def __init__(self, numerator, denominator=1):
+        if denominator == 0:
+            raise ValueError("Denominator cannot be zero")
+        
+        gcd_val = self.gcd(numerator, denominator)
+        self.numerator = numerator // gcd_val
+        self.denominator = denominator // gcd_val
+    
+    @staticmethod
+    def gcd(a, b):
+        a, b = abs(a), abs(b)
+        while b:
+            a, b = b, a % b
+        return a
+    
+    # Перегрузка оператора (+)
+    def __add__(self, other):
+        if isinstance(other, Fraction):
+            new_num = self.numerator * other.denominator + other.numerator * self.denominator
+            new_den = self.denominator * other.denominator
+            return Fraction(new_num, new_den)
+        elif isinstance(other, int):
+            return self + Fraction(other)
+        else:
+            raise TypeError("Unsupported operand type for +")
+    
+    # Перегрузка оператора (-)
+    def __sub__(self, other):
+        if isinstance(other, Fraction):
+            new_num = self.numerator * other.denominator - other.numerator * self.denominator
+            new_den = self.denominator * other.denominator
+            return Fraction(new_num, new_den)
+        elif isinstance(other, int):
+            return self - Fraction(other)
+        else:
+            raise TypeError("Unsupported operand type for -")
+    
+    # Перегрузка оператора (*)
+    def __mul__(self, other):
+        if isinstance(other, Fraction):
+            new_num = self.numerator * other.numerator
+            new_den = self.denominator * other.denominator
+            return Fraction(new_num, new_den)
+        elif isinstance(other, int):
+            return Fraction(self.numerator * other, self.denominator)
+        else:
+            raise TypeError("Unsupported operand type for *")
+    
+    # Перегрузка оператора (/)
+    def __truediv__(self, other):
+        if isinstance(other, Fraction):
+            if other.numerator == 0:
+                raise ZeroDivisionError("Division by zero")
+            new_num = self.numerator * other.denominator
+            new_den = self.denominator * other.numerator
+            return Fraction(new_num, new_den)
+        elif isinstance(other, int):
+            if other == 0:
+                raise ZeroDivisionError("Division by zero")
+            return Fraction(self.numerator, self.denominator * other)
+        else:
+            raise TypeError("Unsupported operand type for /")
+    
+    def __str__(self):
+        if self.denominator == 1:
+            return str(self.numerator)
+        return f"{self.numerator}/{self.denominator}"
+
+#MAIN
+frac1 = Fraction(1, 2)
+frac2 = Fraction(3, 4)
+
+print(f"Сложение: {frac1 + frac2}")     
+print(f"Вычитание: {frac1 - frac2}")    
+print(f"Умножение: {frac1 * frac2}")    
+print(f"Деление: {frac1 / frac2}") 
+
+#Задание 3
+class Library:
+    def __init__(self, name, address, book_count=0):
+        self.name = name
+        self.address = address
+        self.book_count = book_count
+
+    def __add__(self, other):
+        if isinstance(other, (int, float)):
+            return Library(self.name, self.address, self.book_count + other)
+        else:
+            raise TypeError("Can only add numbers to book count")
+
+    def __sub__(self, other):
+        if isinstance(other, (int, float)):
+            new_count = self.book_count - other
+            if new_count < 0:
+                raise ValueError("Book count cannot be negative")
+            return Library(self.name, self.address, new_count)
+        else:
+            raise TypeError("Can only subtract numbers from book count")
+
+    def __iadd__(self, other):
+        if isinstance(other, (int, float)):
+            self.book_count += other
+            return self
+        else:
+            raise TypeError("Can only add numbers to book count")
+    
+    def __isub__(self, other):
+        if isinstance(other, (int, float)):
+            self.book_count -= other
+            if self.book_count < 0:
+                raise ValueError("Book count cannot be negative")
+            return self
+        else:
+            raise TypeError("Can only subtract numbers from book count")
+    
+    def __lt__(self, other):
+        if isinstance(other, Library):
+            return self.book_count < other.book_count
+        else:
+            raise TypeError("Can only compare with other Library objects")
+    
+    def __gt__(self, other):
+        if isinstance(other, Library):
+            return self.book_count > other.book_count
+        else:
+            raise TypeError("Can only compare with other Library objects")
+    
+    def __le__(self, other):
+        if isinstance(other, Library):
+            return self.book_count <= other.book_count
+        else:
+            raise TypeError("Can only compare with other Library objects")
+    
+    def __ge__(self, other):
+        if isinstance(other, Library):
+            return self.book_count >= other.book_count
+        else:
+            raise TypeError("Can only compare with other Library objects")
+    
+    def __eq__(self, other):
+        if isinstance(other, Library):
+            return self.book_count == other.book_count
+        else:
+            raise TypeError("Can only compare with other Library objects")
+    
+    def __ne__(self, other):
+        if isinstance(other, Library):
+            return self.book_count != other.book_count
+        else:
+            raise TypeError("Can only compare with other Library objects")
+    
+    def __str__(self):
+        return f"Библиотека '{self.name}' по адресу {self.address}. Книг: {self.book_count}"
+
+#MAIN
+lib1 = Library("Центральная", "ул. Ленина, 1", 1000)
+lib2 = Library("Районная", "ул. Пушкина, 5", 500)
+
+print(lib1 + 200) 
+print(lib1 - 100)  
+
+lib1 += 300  
+lib2 -= 50   
+
+print(lib1 > lib2)   
+print(lib1 == lib2)  
+print(lib1 <= lib2)  
+
+#Задание 4
+import datetime
+
+class Date:
+    def __init__(self, day, month, year):
+        try:
+            self.date = datetime.date(year, month, day)
+        except ValueError as e:
+            raise ValueError(f"Invalid date: {e}")
+    
+    def __sub__(self, other):
+        if isinstance(other, Date):
+            return (self.date - other.date).days
+        else:
+            raise TypeError("Can only subtract Date objects")
+    
+    def __add__(self, days):
+        if isinstance(days, int):
+            new_date = self.date + datetime.timedelta(days=days)
+            return Date(new_date.day, new_date.month, new_date.year)
+        else:
+            raise TypeError("Can only add integer number of days")
+    
+    def __iadd__(self, days):
+        if isinstance(days, int):
+            self.date += datetime.timedelta(days=days)
+            return self
+        else:
+            raise TypeError("Can only add integer number of days")
+    
+    def __str__(self):
+        return self.date.strftime("%d.%m.%Y")
+
+#MAIN
+date1 = Date(15, 5, 2023)
+date2 = Date(10, 5, 2023)
+
+print(f"Разница между датами: {date1 - date2} дней")
+
+new_date = date2 + 10
+print(f"Дата после добавления 10 дней: {new_date}")
+
+date1 += 30
+print(f"Дата после добавления 30 дней: {date1}")
