@@ -1,101 +1,198 @@
 class HERO:
     def __init__(self, speed, intelligence, strength, agility, luck, attack_power):
-
-        # level,name,nickname, origin, skills, abilities, weaknesses, speed,
-        # agility)
-
-        #основные аттрибуты
-        self.speed = speed # скорость
-        self.intelligence = intelligence #интеллект
-        self.strength = strength #сила
-        self.agility = agility #ловкость
-        self.luck = luck  #удача
-        self.attack_power = attack_power #атакующая мощь
+        # основные аттрибуты
+        self.speed = speed  # скорость
+        self.intelligence = intelligence  # интеллект
+        self.strength = strength  # сила
+        self.agility = agility  # ловкость
+        self.luck = luck  # удача
+        self.attack_power = attack_power  # атакующая мощь
         self.strength = strength
         self.actions = [self.Jump, self.Move, self.Attack, self.Deffence]
+        
+        # дополнительные атрибуты из списка
+        self.level = 1
+        self.name = "Безымянный"
+        self.nickname = ""
+        self.origin = "Неизвестно"
+        self.allegiance = "Нейтральный"
+        self.age = 0
+        self.health = 100
+        self.gender = "Не указан"
+        self.skills = {}  # словарь умений
+        self.abilities = {}  # словарь способностей
+        self.weaknesses = {}  # словарь слабостей
+        self.attack_range = 1  # радиус поражения/атаки
+        
     def Jump(self):
         print(f"{self.name} прыгает")
         return self.agility * 0.5  # Высота прыжка
+        
     def Move(self):
         print(f"{self.name} двигается")
         return self.speed
+        
     def Attack(self):
         print(f"{self.name} атакует")
-
+        return self.attack_power
+        
     def Deffence(self):
         print(f"{self.name} защищает")
+        return self.strength * 0.5
+        
+    def add_skill(self, skill_name, skill_value):
+        self.skills[skill_name] = skill_value
+        
+    def add_ability(self, ability_name, ability_value):
+        self.abilities[ability_name] = ability_value
+        
+    def add_weakness(self, weakness_name, weakness_value):
+        self.weaknesses[weakness_name] = weakness_value
 
-#NPC - базовый класс с параметрами для игровых персонажей и врагов
-class NPC:
-    pass
-#класс для реализации Лучника
+# NPC - базовый класс с параметрами для игровых персонажей и врагов
+class NPC(HERO):
+    def __init__(self, speed=3, intelligence=2, strength=3, agility=3, luck=3, attack_power=3):
+        super().__init__(speed, intelligence, strength, agility, luck, attack_power)
+        self.type = "NPC"
+        self.hostile = False
+
+# класс для реализации Лучника
 class Archer(HERO):
-    def __init__(self,speed = 7, intelligence = 3, strength = 10, agility = 3, luck = 5, attack_power = 7):
-        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
+    def __init__(self, speed=7, intelligence=3, strength=10, agility=3, luck=5, attack_power=7):
+        super().__init__(speed, intelligence, strength, agility, luck, attack_power)
         self.ability = [self.Shot_Arche, self.Dodge, self.Ultimate]
+        self.attack_range = 5
+        self.add_ability("Точность", 8)
+        self.add_skill("Стрельба из лука", 10)
+        self.add_weakness("Ближний бой", 5)
+        
     def Shot_Arche(self):
-        pass
+        damage = self.attack_power * (1 + self.agility/10)
+        print(f"{self.name} стреляет из лука, нанося {damage} урона")
+        return damage
+        
     def Dodge(self):
-        pass
+        dodge_chance = self.agility * 2 + self.luck
+        print(f"{self.name} пытается увернуться с шансом {dodge_chance}%")
+        return dodge_chance > 50
+        
     def Ultimate(self):
-        pass
-#класс для реализации целителя
-class Healer(HERO):
-    def __init__(self,speed = 5, intelligence = 4, strength = 1, agility = 10, luck = 3, attack_power = 5):
-        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
-        self.ability = [self.Heal, self.Attrack_Middle, self.Ultimate]
-    def Heal(self):
-        pass
-    def Attrack_Middle(self):
-        pass
-    def Ultimate(self):
-        pass
-#класс для реализации мага
-class Mag(HERO):
-    def __init__(self,speed = 10, intelligence = 3, strength = 4, agility = 7, luck = 6, attack_power = 7):
-        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
-        self.ability = [self.FireBoll, self.Magic_Shid, self.Ultimate]
-    def FireBoll(self):
-        pass
-    def Magic_Shid(self):
-        pass
-    def Ultimate(self):
-        pass
-#класс для реализации воина
-class Warrior(HERO):
-    def __init__(self,speed = 4, intelligence = -1, strength = 5, agility = 7, luck = 5, attack_power = 10):
-        HERO.__init__(self,speed, intelligence, strength, agility, luck, attack_power)
-        self.ability = [self.Deffence_Shid(), self.Attrack_Sword, self.Ultimate]
-    def Deffence_Shid(self):
-        pass
-    def Attrack_Sword(self):
-        pass
-    def Ultimate(self):
-        pass
+        print(f"{self.name} использует ультимейт: Град стрел!")
+        return self.attack_power * 3
 
-#класс-Меню_Выбора_Игрового_Персонажа
+# класс для реализации целителя
+class Healer(HERO):
+    def __init__(self, speed=5, intelligence=4, strength=1, agility=10, luck=3, attack_power=5):
+        super().__init__(speed, intelligence, strength, agility, luck, attack_power)
+        self.ability = [self.Heal, self.Attrack_Middle, self.Ultimate]
+        self.add_ability("Исцеление", 8)
+        self.add_skill("Магия света", 7)
+        self.add_weakness("Темная магия", 6)
+        
+    def Heal(self, target):
+        heal_amount = self.intelligence * 2 + self.luck
+        print(f"{self.name} исцеляет {target.name} на {heal_amount} HP")
+        return heal_amount
+        
+    def Attrack_Middle(self):
+        damage = self.attack_power + self.intelligence
+        print(f"{self.name} атакует магией, нанося {damage} урона")
+        return damage
+        
+    def Ultimate(self):
+        print(f"{self.name} использует ультимейт: Массовое исцеление!")
+        return self.intelligence * 5
+
+# класс для реализации мага
+class Mag(HERO):
+    def __init__(self, speed=10, intelligence=3, strength=4, agility=7, luck=6, attack_power=7):
+        super().__init__(speed, intelligence, strength, agility, luck, attack_power)
+        self.ability = [self.FireBoll, self.Magic_Shid, self.Ultimate]
+        self.attack_range = 4
+        self.add_ability("Магическая мощь", 9)
+        self.add_skill("Заклинания", 8)
+        self.add_weakness("Антимагия", 7)
+        
+    def FireBoll(self):
+        damage = self.attack_power + self.intelligence * 1.5
+        print(f"{self.name} бросает огненный шар, нанося {damage} урона")
+        return damage
+        
+    def Magic_Shid(self):
+        shield = self.intelligence * 3
+        print(f"{self.name} создает магический щит с прочностью {shield}")
+        return shield
+        
+    def Ultimate(self):
+        print(f"{self.name} использует ультимейт: Метеоритный дождь!")
+        return self.attack_power * 4
+
+# класс для реализации воина
+class Warrior(HERO):
+    def __init__(self, speed=4, intelligence=-1, strength=5, agility=7, luck=5, attack_power=10):
+        super().__init__(speed, intelligence, strength, agility, luck, attack_power)
+        self.ability = [self.Deffence_Shid, self.Attrack_Sword, self.Ultimate]
+        self.add_ability("Крепкая броня", 7)
+        self.add_skill("Владение мечом", 9)
+        self.add_weakness("Магические атаки", 8)
+        
+    def Deffence_Shid(self):
+        defense = self.strength * 2 + self.agility
+        print(f"{self.name} поднимает щит, увеличивая защиту на {defense}")
+        return defense
+        
+    def Attrack_Sword(self):
+        damage = self.attack_power + self.strength
+        print(f"{self.name} атакует мечом, нанося {damage} урона")
+        return damage
+        
+    def Ultimate(self):
+        print(f"{self.name} использует ультимейт: Разрушительный удар!")
+        return self.attack_power * 5
+
+# класс-Меню_Выбора_Игрового_Персонажа
 class Game_Select_HERO:
     def __init__(self):
         self.name = ''
+        self.hero_class = None
+        
     def HERO_Select_User(self):
         self.name = input("Введите имя: ")
-#класс-Меню_Игоровго_Процесса
+        print("Выберите класс персонажа:")
+        print("1. Лучник")
+        print("2. Целитель")
+        print("3. Маг")
+        print("4. Воин")
+        
+        choice = input("Введите номер класса: ")
+        if choice == "1":
+            self.hero_class = Archer
+        elif choice == "2":
+            self.hero_class = Healer
+        elif choice == "3":
+            self.hero_class = Mag
+        elif choice == "4":
+            self.hero_class = Warrior
+        else:
+            print("Неверный выбор, по умолчанию будет выбран Воин")
+            self.hero_class = Warrior
+            
+        return self.hero_class, self.name
+
+# класс-Меню_Игрового_Процесса
 class Game_Process_Change:
-    gameSelectHERO = gameSelectHERO()
-    HERO = Warrior(gameSelectHERO.name)
+    def __init__(self):
+        self.gameSelectHERO = Game_Select_HERO()
+        hero_class, name = self.gameSelectHERO.HERO_Select_User()
+        self.HERO = hero_class()
+        self.HERO.name = name
 
-
-
-
-#MAIN Для запуска
+# MAIN Для запуска
 def main():
-    pass
-if __name__ == "__main__":
+    game = Game_Process_Change()
+    print(f"Персонаж {game.HERO.name} создан!")
+    print(f"Класс: {game.HERO.__class__.__name__}")
+    print(f"Характеристики: Сила {game.HERO.strength}, Ловкость {game.HERO.agility}, Интеллект {game.HERO.intelligence}")
 
-        # #аттрибуты персонажа
-        # self.speed = speed #скорость
-        # self.intelligence = intelligence #интелект
-        # self.strength = strength #сила
-        # self.agility = agility #ловкость
-        # self.luck = luck #удача
-        # self.attack_power = attack_power #сила атаки
+if __name__ == "__main__":
+    main()
