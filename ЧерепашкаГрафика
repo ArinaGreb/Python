@@ -1,0 +1,30 @@
+from turtle import *
+#title()
+#myt = turtle.Turtle() # создание объекта класса
+shape("turtle") # показаться на экране
+# forward(50) # движение вперед
+# right(90) # поворот на право
+# forward(50) # движение вперед
+# right(90) # поворот на право
+# forward(50) # движение вперед
+# right(90) # поворот на право
+# forward(50) # движение вперед
+# right(90) # поворот на право
+# forward(50) # движение вперед
+# right(90) # поворот на право
+#color('red') # цвет
+#penup() # поднять кисть
+#pendown() # отпустить кисть
+#pensize() # размер кисти
+bgcolor("black")
+speed(20)
+pensize(10)
+import random
+color_list = ("red", "orange", "yellow", "green", "blue", "purple")
+for i in range(200):
+    for j in range(6):
+        color(color_list[random.randint(0,5)])
+        forward(i)
+        right(30)
+
+mainloop()
