@@ -19,6 +19,8 @@ class Class_Hero:
         pass
     def Deffence(self):
         pass
+    def LoadFromFile(self): # загружает данные из файла и присваивает их текущему объекту
+        pass
 #NPC - Базовый класс с параметрами для игровых персонажей и врагов
 class NPC:
     def __init__(self, Attack_Power=10, HP=100, enemy_name=''):
@@ -146,7 +148,23 @@ class Game_Process_Change:
                 self.Game_Start = False
                 print("Вы погибли в подземелье:( \n ")
 
-
+    def SaveToFile(ObjectHero): # обрабатывает текущие данные объекта класса и записывает их в словарь-файл
+        SaveClass = {"Speed":ObjectHero.Speed,
+                     "Intelligence":ObjectHero.Intelligence,
+                     "Strength":ObjectHero.Strength,
+                     "Agility":ObjectHero.Agility,
+                     "Luck":ObjectHero.Luck,
+                     "Attack_Power":ObjectHero.Attack_Power,
+                     "HP":ObjectHero.HP,'enemy_name':ObjectHero.enemy_name}
+        # запись данных в файл
+        with open("HeroSave.txt", 'w') as file:
+            file.write("{") # "{" что бы сохранить структуру словаря {слово},
+            for key, item in SaveClass.items():
+                file.write(key+":"+item)
+            file.write("}")
+    def LoadFromFile(self):
+        # загружает данные из файла и присваивает их текущему объекту
+        pass
 
 
 
