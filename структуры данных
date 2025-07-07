@@ -1,0 +1,138 @@
+# связанные списки
+# это последовательность элементов данных, которые связаны между собой ссылками
+# каждый элемент хранит в себе данные и ссылку ввиде указателя на другой элемент
+class Node:
+    def __init__(self, dataval=None):
+        self.dataval = dataval #начение первого элемента
+        self.nextval = None # указатель на next
+class SLinkedList:
+    def __init__(self):
+        self.headval = None
+    def listprint(self):
+        printval = self.headval
+        while printval is not None:
+            print(printval.dataval)
+            printval = printval.nextval
+    def AddBegining(self, newdataval):
+        NewNode = Node(newdataval)
+        NewNode.nextval = self.headval
+        self.headval = NewNode
+    def AddEnd(self, newdataval):
+        NewNode = Node(newdataval)
+        if self.headval is None:
+            self.headval = NewNode
+            return
+        laste = self.headval
+        while(laste.nextval): # проходим по всем ссылкам, пока они не равны None
+            laste = laste.nextval # присваимваем значение след. элемента
+        laste.nextval = NewNode # добавляем новое значение
+    def RemoveNode(self, RemoveKey):
+        HeadVal = self.headval
+        if (HeadVal is not None):
+            if (HeadVal.dataval == RemoveKey):
+                self.head = HeadVal.next
+                HeadVal = None
+                return
+        while (HeadVal is not None):
+            if HeadVal.data == RemoveKey:
+                break
+            prev = HeadVal
+            HeadVal = HeadVal.next
+        if (HeadVal == None):
+            return
+        prev.next = HeadVal.next
+        HeadVal = None
+#MAIN
+# создаем объект Node и сохраняем SLinkedList для использования списка передаем значения на хранение данных через объект
+# узла, чтобы указать на следю элементы
+list1 = SLinkedList()
+list1.headval = Node("Mom")
+e2 = Node("Tue")
+e3 = Node("Wed")
+list1.headval.nextval = e2
+e2.nextval = e3
+list1.listprint() # печать списка
+list1.AddBegining("Fri") # вставка в начало списка
+list1.listprint() # печать списка
+#Стек
+# хранит элементы данных таким образом, как куча тарелок хранятся одна за одной на кухне
+# таким образом стек данных позволяет выполнять операции на одном конце, который можно назвать вершиной стека(root)
+# реализация ФУНКЦИИ : "Последний пришел первым(LIFO)"
+# основные операции - это PUSH and POP
+class Stack:
+    def __init__(self):
+        self.stack = []
+    def add(self, dataval):
+        if dataval not in self.stack:
+            self.stack.append(dataval)
+            return True
+        else:
+            return False
+    def printList(self):
+        return self.stack
+
+    def peek(self):
+        return self.stack[-1]
+    def remove(self):
+        if len(self.stack) <= 0:
+            return "Стек пуст."
+        else:
+            return self.stack.pop()
+#MAIN
+ASTACK = Stack()
+ASTACK.add('Mon')
+ASTACK.add('Tue')
+print(ASTACK.peek())
+ASTACK.add('Wed')
+ASTACK.add('Thu')
+print(ASTACK.peek())
+print(ASTACK.remove())
+print(ASTACK.remove())
+
+# очередь - первый пришел, первый ушел (FFO)
+# структура очереди означает тоже самое, как и очередь в нашей современной жизни
+# уникальность в том, что элементы добавляются и удаляются
+class Queue:
+    def __init__(self):
+        self.queue = list()
+    def removefromg(self):
+        if len(self.queue) > 0:
+            return self.queue.pop()
+        return "Очередь пуста!"
+
+    def Addtoq(self, dataval):
+        if dataval is not self.queue:
+            self.queue.insert(0, dataval)
+            return True
+        return False
+    def Size(self):
+        return len(self.queue)
+print("Работа с очередью")
+TheQueue = Queue()
+TheQueue.Addtoq('Moon')
+TheQueue.Addtoq('Pen')
+TheQueue.Addtoq('Men')
+print(TheQueue.Size())
+print(f"Удаление: {TheQueue.removefromg()}")
+# деревья
+# как и списки деревья состоят из узлов, широко известно бинарное дерево, каждый узел которого содержит ссылки на
+# два других узла. Эти ссылки указывают на левое и правое поддеревья. Как и узлы связанных списков, узлы деревьев также
+# содержат полезные данные.
+# Вершину называют корнем дерева
+# Узлы - ВЕТКАМИ,
+# Элементы, не имеющие ссылок - Листья
+# в результате образования, получается родительский узел, от него идут дочерние узлы, а узлы, имеющие - сестринские узлы
+class Tree:
+    def __init__(self, cargo, left = None, right=None):
+        self.cargo = cargo
+        self.left = left
+        self.right = right
+    def __str__(self):
+        return str(self.cargo)
+def total(tree):
+    if tree == None: return 0
+    return total(tree.left) + total(tree.right) + tree.cargo
+# для того, чтобы построить дерево нужно идти сверху-вниз
+left = Tree(2)
+right = Tree(3)
+tree = Tree(1, left, right)
