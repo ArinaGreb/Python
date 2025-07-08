@@ -1,0 +1,284 @@
+# Класс-Родитель для всех классов в игре
+import random
+
+
+class Class_Hero:
+    def __init__(self, Speed, Intelligence, Strength, Agility, Luck, Attack_Power):
+        self.Speed = Speed
+        self.Intelligence = Intelligence
+        self.Agility = Agility
+        self.Luck = Luck
+        self.Attack_Power = Attack_Power
+        self.Strength = Strength
+        self.Actions = [self.Jump, self.Move, self.Attack, self.Deffence]
+
+    def Jump(self):
+        jump_height = self.Strength * 0.5 + self.Agility * 0.3
+        print(f"Вы подпрыгнули на {jump_height:.1f} метров!")
+        return jump_height
+
+    def Move(self):
+        move_speed = self.Speed * 2 + self.Agility * 0.5
+        print(f"Вы переместились со скоростью {move_speed:.1f} единиц!")
+        return move_speed
+
+    def Attack(self):
+        damage = self.Attack_Power + random.randint(0, self.Strength)
+        print(f"Базовая атака нанесла {damage} урона!")
+        return damage
+
+    def Deffence(self):
+        defense = self.Strength * 0.8 + random.randint(0, self.Agility)
+        print(f"Вы заблокировали {defense:.1f} урона!")
+        return defense
+
+    def LoadFromFile(self):
+        pass
+
+
+class NPC:
+    def __init__(self, Attack_Power=10, HP=100, enemy_name=''):
+        self.Attack_Power = Attack_Power
+        self.HP = HP
+        self.Enemy_Name = enemy_name
+
+    def DEFF(self, value_damage):
+        self.HP -= value_damage
+        if self.HP <= 0:
+            return f' {self.Enemy_Name} был убит.'
+        return f"{self.Enemy_Name} получил {value_damage} урона. Сейчас у него {self.HP} HP."
+
+    def ATTACK(self):
+        return self.Attack_Power
+
+
+class Enemy(NPC):
+    def __init__(self):
+        self.enemy_list = ['Гоблин', 'Куб-Слизь', 'Дракон', 'Повелитель телей']
+        NPC.__init__(
+            self,
+            random.randint(50, 100),
+            random.randint(100, 200),
+            self.enemy_list[random.randint(0, len(self.enemy_list)-1)]
+        )
+
+
+class Archer(Class_Hero, NPC):
+    def __init__(self, Speed=1, Intelligence=2, Strength=1, Agility=5, Luck=1, Attack_Power=5, name=''):
+        Class_Hero.__init__(self, Speed, Intelligence, Strength, Agility, Luck, Attack_Power)
+        NPC.__init__(self, Attack_Power, 120, name)
+        self.Ability = [self.Shot_Arche, self.Dodge, self.Ultimate]
+
+    def Shot_Arche(self):
+        damage = self.Attack_Power * 2 + random.randint(0, self.Agility)
+        print(f"Выстрел из лука нанес {damage} урона!")
+        return damage
+
+    def Dodge(self):
+        dodge_chance = self.Agility * 10 + self.Luck * 5
+        print(f"Шанс уклонения: {dodge_chance}%")
+        return random.randint(1, 100) <= dodge_chance
+
+    def Ultimate(self):
+        damage = self.Attack_Power * 3 + self.Agility * 2
+        print(f"Смертельный выстрел нанес {damage} урона!")
+        return damage
+
+
+class Healer(Class_Hero, NPC):
+    def __init__(self, Speed=0, Intelligence=5, Strength=0, Agility=2, Luck=0, Attack_Power=1, name=''):
+        Class_Hero.__init__(self, Speed, Intelligence, Strength, Agility, Luck, Attack_Power)
+        NPC.__init__(self, Attack_Power, 150, name)
+        self.Ability = [self.Attack_middle, self.Heal, self.Ultimate]
+
+    def Heal(self):
+        heal_amount = self.Intelligence * 3 + random.randint(5, 10)
+        self.HP = min(150, self.HP + heal_amount)
+        print(f"Вы исцелили себя на {heal_amount} HP. Теперь у вас {self.HP} HP.")
+        return heal_amount
+
+    def Attack_middle(self):
+        damage = self.Attack_Power + self.Intelligence
+        print(f"Атака светом нанесла {damage} урона!")
+        return damage
+
+    def Ultimate(self):
+        heal_all = self.Intelligence * 5
+        self.HP = min(150, self.HP + heal_all)
+        print(f"Великое исцеление восстановило {heal_all} HP!")
+        return heal_all
+
+
+class Mage(Class_Hero, NPC):
+    def __init__(self, Speed=3, Intelligence=10, Strength=0, Agility=8, Luck=3, Attack_Power=8, name=''):
+        Class_Hero.__init__(self, Speed, Intelligence, Strength, Agility, Luck, Attack_Power)
+        NPC.__init__(self, Attack_Power, 100, name)
+        self.Ability = [self.FireBoll, self.Magic_Shild, self.Ultimate]
+
+    def FireBoll(self):
+        damage = self.Attack_Power + self.Intelligence * 2
+        print(f"Огненный шар нанес {damage} урона!")
+        return damage
+
+    def Ultimate(self):
+        damage = self.Intelligence * 4 + random.randint(5, 15)
+        print(f"Метеоритный дождь нанес {damage} урона!")
+        return damage
+
+    def Magic_Shild(self):
+        shield = self.Intelligence * 3
+        print(f"Магический щит блокирует {shield} урона!")
+        return shield
+
+
+class Warrior(Class_Hero, NPC):
+    def __init__(self, Speed=4, Intelligence=-1, Strength=10, Agility=1, Luck=3, Attack_Power=8, name=''):
+        Class_Hero.__init__(self, Speed, Intelligence, Strength, Agility, Luck, Attack_Power)
+        NPC.__init__(self, Attack_Power, 200, name)
+        self.Ability = [self.Attack_Sword, self.Deffence_Shild, self.Ultimate]
+
+    def Ultimate(self):
+        damage = self.Strength * 4
+        print(f"Сокрушительный удар нанес {damage} урона!")
+        return damage
+
+    def Deffence_Shild(self):
+        defense = self.Strength * 3
+        print(f"Щит заблокировал {defense} урона!")
+        return defense
+
+    def Attack_Sword(self):
+        damage = self.Attack_Power + self.Strength * 2
+        print(f"Мощный удар мечом нанес {damage} урона!")
+        return damage
+
+
+class Game_Select_Hero:
+    def __init__(self):
+        self.name = ''
+        self.type = ''
+
+    def Hero_Select_User(self):
+        self.name = input("Введите Имя:")
+        self.type = int(input("Выберите класс персонажа: \n 1.Лучник. \n 2.Целитель \n 3.Маг \n 4.Воин \n Ваш Выбор:"))
+        return [self.name, self.type]
+
+    def User_Hello(self):
+        print("Добро пожаловать в наш игровый мир по вселенной DND! \n"
+              "Cейчас мы отправимся в подземелье, в котором у нас будем много приключений и опасностей! \n"
+              "Ваша задача - выбрать класс персонажа и побеждать врагов!"
+              "Готовы? тогда приступим! Ответьте на пару вопросов перед игрой:")
+
+
+class Game_Process_Change:
+    def battle(self):
+        while self.Hero.HP > 0 and self.enemy.HP > 0:
+            print(f"\nВаш HP: {self.Hero.HP} | HP врага: {self.enemy.HP}")
+            print("Ваши действия: \n1. Атака\n2. Защита\n3. Способность\n4. Побег")
+            user_choice = int(input("Ваш выбор: "))
+            
+            if user_choice == 1:
+                print(self.enemy.DEFF(self.Hero.Attack()))
+                if self.enemy.HP > 0:
+                    print(self.Hero.DEFF(self.enemy.ATTACK()))
+            
+            elif user_choice == 2:
+                defense = self.Hero.Deffence()
+                damage = max(0, self.enemy.ATTACK() - defense)
+                print(self.Hero.DEFF(damage))
+                print(f"Вы заблокировали {defense} урона!")
+            
+            elif user_choice == 3:
+                print("\nВыберите способность:")
+                for i, ability in enumerate(self.Hero.Ability, 1):
+                    print(f"{i}. {ability.__name__}")
+                ability_choice = int(input("Ваш выбор: ")) - 1
+                
+                if 0 <= ability_choice < len(self.Hero.Ability):
+                    ability_damage = self.Hero.Ability[ability_choice]()
+                    print(self.enemy.DEFF(ability_damage))
+                    if self.enemy.HP > 0:
+                        print(self.Hero.DEFF(self.enemy.ATTACK()))
+                else:
+                    print("Неверный выбор способности!")
+            
+            elif user_choice == 4:
+                escape_chance = self.Hero.Speed * 10 + self.Hero.Luck * 5
+                if random.randint(1, 100) <= escape_chance:
+                    print("Вы успешно сбежали!")
+                    return True
+                else:
+                    print("Побег не удался!")
+                    print(self.Hero.DEFF(self.enemy.ATTACK() * 0.5))
+            
+            else:
+                print("Неверный выбор!")
+        
+        if self.Hero.HP <= 0:
+            return False
+        print(f"Вы победили {self.enemy.Enemy_Name}!")
+        return True
+
+    def game(self):
+        self.Hero = None
+        gameSelectHero = Game_Select_Hero()
+        gameSelectHero.User_Hello()
+        hero_list = gameSelectHero.Hero_Select_User()
+        
+        match hero_list[1]:
+            case 1:
+                self.Hero = Archer(name=hero_list[0])
+            case 2:
+                self.Hero = Healer(name=hero_list[0])
+            case 3:
+                self.Hero = Mage(name=hero_list[0])
+            case 4:
+                self.Hero = Warrior(name=hero_list[0])
+        
+        print(f"\nПерсонаж {self.Hero.Enemy_Name} успешно создан!")
+        print(f"Класс: {self.Hero.__class__.__name__}")
+        print(f"HP: {self.Hero.HP}, Атака: {self.Hero.Attack_Power}")
+        
+        self.Game_Start = True
+        level = 1
+        
+        while self.Game_Start:
+            print(f"\n=== Уровень {level} ===")
+            self.enemy = Enemy()
+            print(f"Вы встречаете: {self.enemy.Enemy_Name} (HP: {self.enemy.HP}, Атака: {self.enemy.Attack_Power})")
+            
+            if not self.battle():
+                self.Game_Start = False
+                print("Вы погибли в подземелье... Игра окончена.")
+            else:
+                level += 1
+                continue_choice = input("Продолжить путешествие? (да/нет): ").lower()
+                if continue_choice != 'да':
+                    self.Game_Start = False
+                    print(f"Игра завершена. Вы достигли уровня {level-1}!")
+
+    def SaveToFile(self, ObjectHero):
+        SaveClass = {"Speed": ObjectHero.Speed,
+                     "Intelligence": ObjectHero.Intelligence,
+                     "Strength": ObjectHero.Strength,
+                     "Agility": ObjectHero.Agility,
+                     "Luck": ObjectHero.Luck,
+                     "Attack_Power": ObjectHero.Attack_Power,
+                     "HP": ObjectHero.HP, 'enemy_name': ObjectHero.Enemy_Name}
+        with open("HeroSave.txt", 'w') as file:
+            file.write("{")
+            for key, item in SaveClass.items():
+                file.write(f"{key}:{item},")
+            file.write("}")
+
+    def LoadFromFile(self):
+        pass
+
+
+def main():
+    gameprocesschange = Game_Process_Change()
+    gameprocesschange.game()
+
+
+if __name__ == "__main__":
+    main()
