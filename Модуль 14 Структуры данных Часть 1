@@ -1,0 +1,119 @@
+#Задание 1
+class NumberListManager:
+    def __init__(self):
+        self.numbers = []
+
+    # добавить новое число
+    def add_number(self, num):
+        if num in self.numbers:
+            print(f"Число {num} уже есть в списке!")
+            return False
+        self.numbers.append(num)
+        print(f"Число {num} добавлено.")
+        return True
+
+    # удалить все вхождения
+    def remove_all_occurrences(self, num):
+        if num not in self.numbers:
+            print(f"Число {num} отсутствует в списке.")
+            return False
+
+        self.numbers = [x for x in self.numbers if x != num]
+        print(f"Все вхождения числа {num} удалены.")
+        return True
+
+    #показать список
+    def show_list(self, reverse=False):
+        if not self.numbers:
+            print("Список пуст.")
+            return
+
+        if reverse:
+            print("Список с конца:", self.numbers[::-1])
+        else:
+            print("Список с начала:", self.numbers)
+
+    # проверить значение в списке
+    def check_number_exists(self, num):
+        exists = num in self.numbers
+        print(f"Число {num} {'присутствует' if exists else 'отсутствует'} в списке.")
+        return exists
+
+    # заменить значения в списке
+    def replace_number(self, old_num, new_num, replace_all=False):
+        if old_num not in self.numbers:
+            print(f"Число {old_num} отсутствует в списке.")
+            return False
+
+        if replace_all:
+            self.numbers = [new_num if x == old_num else x for x in self.numbers]
+            print(f"Все вхождения числа {old_num} заменены на {new_num}.")
+        else:
+            index = self.numbers.index(old_num)
+            self.numbers[index] = new_num
+            print(f"Первое вхождение числа {old_num} заменено на {new_num}.")
+        return True
+
+# меню
+def number_list_menu():
+    manager = NumberListManager()
+
+    while True:
+        print("\nМеню управления списком чисел:")
+        print("1. Добавить новое число")
+        print("2. Удалить все вхождения числа")
+        print("3. Показать содержимое списка")
+        print("4. Проверить наличие числа")
+        print("5. Заменить значение в списке")
+        print("6. Выход")
+
+        choice = input("Выберите пункт меню: ")
+
+        if choice == "1":
+            try:
+                num = int(input("Введите число для добавления: "))
+                manager.add_number(num)
+            except ValueError:
+                print("Ошибка: введите целое число!")
+
+        elif choice == "2":
+            try:
+                num = int(input("Введите число для удаления: "))
+                manager.remove_all_occurrences(num)
+            except ValueError:
+                print("Ошибка: введите целое число!")
+
+        elif choice == "3":
+            direction = input("Показать с начала (1) или с конца (2)? ")
+            manager.show_list(direction == "2")
+
+        elif choice == "4":
+            try:
+                num = int(input("Введите число для проверки: "))
+                manager.check_number_exists(num)
+            except ValueError:
+                print("Ошибка: введите целое число!")
+
+        elif choice == "5":
+            try:
+                old_num = int(input("Введите число, которое нужно заменить: "))
+                new_num = int(input("Введите новое число: "))
+                replace_all = input("Заменить все вхождения? (да/нет): ").lower() == 'да'
+                manager.replace_number(old_num, new_num, replace_all)
+            except ValueError:
+                print("Ошибка: введите целые числа!")
+
+        elif choice == "6":
+            print("Выход.")
+            break
+
+        else:
+            print("Неверный выбор.")
+
+
+if __name__ == "__main__":
+    number_list_menu()
+
+#Задание 2
+
+#Задание 3
