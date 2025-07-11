@@ -115,5 +115,190 @@ if __name__ == "__main__":
     number_list_menu()
 
 #Задание 2
+class FixedSizeStack:
+    def init(self, max_size):
+        self.max_size = max_size
+        self.stack = []
+    
+    def push(self, item):
+        if self.is_full():
+            raise Exception("Стек переполнен")
+        self.stack.append(item)
+    
+    def pop(self):
+        if self.is_empty():
+            raise Exception("Стек пуст")
+        return self.stack.pop()
+    
+    def peek(self):
+        if self.is_empty():
+            raise Exception("Стек пуст")
+        return self.stack[-1]
+    
+    def is_empty(self):
+        return len(self.stack) == 0
+    
+    def is_full(self):
+        return len(self.stack) == self.max_size
+    
+    def size(self):
+        return len(self.stack)
+    
+    def clear(self):
+        self.stack.clear()
 
+
+class StackManager:
+    def init(self):
+        self.stack = None
+    
+    def create_stack(self, size):
+        self.stack = FixedSizeStack(size)
+        print(f"Стек размером {size} создан.")
+    
+    def run_menu(self):
+        while True:
+            print("\nМеню управления стеком:")
+            print("1. Создать стек")
+            print("2. Добавить строку")
+            print("3. Извлечь строку")
+            print("4. Посмотреть верхнюю строку")
+            print("5. Размер стека")
+            print("6. Проверить пустоту")
+            print("7. Проверить заполненность")
+            print("8. Очистить стек")
+            print("9. Выход")
+            
+            choice = input("Выберите пункт меню: ")
+            
+            try:
+                if choice == "1":
+                    size = int(input("Введите размер стека: "))
+                    self.create_stack(size)
+                
+                elif choice == "2":
+                    if self.stack is None:
+                        print("Сначала создайте стек!")
+                        continue
+                    item = input("Введите строку: ")
+                    self.stack.push(item)
+                    print(f"Строка '{item}' добавлена.")
+                
+                elif choice == "3":
+                    item = self.stack.pop()
+                    print(f"Извлечена строка: '{item}'")
+                
+                elif choice == "4":
+                    item = self.stack.peek()
+                    print(f"Верхняя строка: '{item}'")
+                
+                elif choice == "5":
+                    print(f"Текущий размер стека: {self.stack.size()}")
+                
+                elif choice == "6":
+                    print("Стек пуст." if self.stack.is_empty() else "Стек не пуст.")
+                
+                elif choice == "7":
+                    print("Стек полон." if self.stack.is_full() else "Стек не полон.")
+                
+                elif choice == "8":
+                    self.stack.clear()
+                    print("Стек очищен.")
+                
+                elif choice == "9":
+                    print("Выход из программы.")
+                    break
+                
+                else:
+                    print("Неверный выбор. Попробуйте снова.")
+            
+            except Exception as e:
+                print(f"Ошибка: {str(e)}")
+
+
+if name == "main":
+    manager = StackManager()
+    manager.run_menu()
 #Задание 3
+class DynamicSizeStack:
+    def init(self):
+        self.stack = []
+    
+    def push(self, item):
+        self.stack.append(item)
+    
+    def pop(self):
+        if self.is_empty():
+            raise Exception("Стек пуст")
+        return self.stack.pop()
+    
+    def peek(self):
+        if self.is_empty():
+            raise Exception("Стек пуст")
+        return self.stack[-1]
+    
+    def is_empty(self):
+        return len(self.stack) == 0
+    
+    def size(self):
+        return len(self.stack)
+    
+    def clear(self):
+        self.stack.clear()
+
+
+class DynamicStackManager:
+    def init(self):
+        self.stack = DynamicSizeStack()
+    
+    def run_menu(self):
+        while True:
+            print("\nМеню управления динамическим стеком:")
+            print("1. Добавить строку")
+            print("2. Извлечь строку")
+            print("3. Посмотреть верхнюю строку")
+            print("4. Размер стека")
+            print("5. Проверить пустоту")
+            print("6. Очистить стек")
+            print("7. Выход")
+            
+            choice = input("Выберите пункт меню: ")
+            
+            try:
+                if choice == "1":
+                    item = input("Введите строку: ")
+                    self.stack.push(item)
+                    print(f"Строка '{item}' добавлена.")
+                
+                elif choice == "2":
+                    item = self.stack.pop()
+                    print(f"Извлечена строка: '{item}'")
+                
+                elif choice == "3":
+                    item = self.stack.peek()
+                    print(f"Верхняя строка: '{item}'")
+                
+                elif choice == "4":
+                    print(f"Текущий размер стека: {self.stack.size()}")
+                
+                elif choice == "5":
+                    print("Стек пуст." if self.stack.is_empty() else "Стек не пуст.")
+                
+                elif choice == "6":
+                    self.stack.clear()
+                    print("Стек очищен.")
+                
+                elif choice == "7":
+                    print("Выход из программы.")
+                    break
+                
+                else:
+                    print("Неверный выбор. Попробуйте снова.")
+            
+            except Exception as e:
+                print(f"Ошибка: {str(e)}")
+
+
+if name == "main":
+    manager = DynamicStackManager()
+    manager.run_menu()
