@@ -116,7 +116,7 @@ if __name__ == "__main__":
 
 #Задание 2
 class FixedSizeStack:
-    def init(self, max_size):
+    def __init__(self, max_size):
         self.max_size = max_size
         self.stack = []
     
@@ -149,7 +149,7 @@ class FixedSizeStack:
 
 
 class StackManager:
-    def init(self):
+    def __init__(self):
         self.stack = None
     
     def create_stack(self, size):
@@ -216,12 +216,12 @@ class StackManager:
                 print(f"Ошибка: {str(e)}")
 
 
-if name == "main":
+if __name__ == "__main__":
     manager = StackManager()
     manager.run_menu()
 #Задание 3
 class DynamicSizeStack:
-    def init(self):
+    def __init__(self):
         self.stack = []
     
     def push(self, item):
@@ -248,7 +248,7 @@ class DynamicSizeStack:
 
 
 class DynamicStackManager:
-    def init(self):
+    def __init__(self):
         self.stack = DynamicSizeStack()
     
     def run_menu(self):
@@ -299,6 +299,6 @@ class DynamicStackManager:
                 print(f"Ошибка: {str(e)}")
 
 
-if name == "main":
+if __name__ == "__main__":
     manager = DynamicStackManager()
     manager.run_menu()
